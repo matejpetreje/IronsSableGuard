@@ -1,0 +1,698 @@
+Compiled from "PortalEntity.java"
+public class io.redspace.ironsspellbooks.entity.spells.portal.PortalEntity extends net.minecraft.world.entity.Entity implements io.redspace.ironsspellbooks.entity.mobs.AntiMagicSusceptible {
+  private static final net.minecraft.network.syncher.EntityDataAccessor<java.util.Optional<java.util.UUID>> DATA_ID_OWNER_UUID;
+
+  private static final net.minecraft.network.syncher.EntityDataAccessor<java.lang.Boolean> DATA_PORTAL_CONNECTED;
+
+  private it.unimi.dsi.fastutil.objects.Object2ObjectMap<java.util.UUID, io.redspace.ironsspellbooks.entity.spells.portal.PortalEntity$LoopTrackerData> loopTrackerLookup;
+
+  private final int loopMax;
+
+  private final int loopTickWindow;
+
+  private long ticksToLive;
+
+  private boolean isPortalConnected;
+
+  public io.redspace.ironsspellbooks.entity.spells.portal.PortalEntity(net.minecraft.world.level.Level, io.redspace.ironsspellbooks.entity.spells.portal.PortalData);
+    Code:
+       0: aload_0
+       1: getstatic     #1                  // Field io/redspace/ironsspellbooks/registries/EntityRegistry.PORTAL:Lnet/neoforged/neoforge/registries/DeferredHolder;
+       4: invokevirtual #7                  // Method net/neoforged/neoforge/registries/DeferredHolder.get:()Ljava/lang/Object;
+       7: checkcast     #13                 // class net/minecraft/world/entity/EntityType
+      10: aload_1
+      11: invokespecial #15                 // Method "<init>":(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V
+      14: getstatic     #21                 // Field io/redspace/ironsspellbooks/capabilities/magic/PortalManager.INSTANCE:Lio/redspace/ironsspellbooks/capabilities/magic/PortalManager;
+      17: aload_0
+      18: getfield      #27                 // Field uuid:Ljava/util/UUID;
+      21: aload_2
+      22: invokevirtual #31                 // Method io/redspace/ironsspellbooks/capabilities/magic/PortalManager.addPortalData:(Ljava/util/UUID;Lio/redspace/ironsspellbooks/entity/spells/portal/PortalData;)V
+      25: aload_0
+      26: aload_2
+      27: getfield      #35                 // Field io/redspace/ironsspellbooks/entity/spells/portal/PortalData.ticksToLive:I
+      30: i2l
+      31: putfield      #41                 // Field ticksToLive:J
+      34: return
+
+  public io.redspace.ironsspellbooks.entity.spells.portal.PortalEntity(net.minecraft.world.entity.EntityType<? extends io.redspace.ironsspellbooks.entity.spells.portal.PortalEntity>, net.minecraft.world.level.Level);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: invokespecial #44                 // Method net/minecraft/world/entity/Entity."<init>":(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V
+       6: aload_0
+       7: new           #47                 // class it/unimi/dsi/fastutil/objects/Object2ObjectOpenHashMap
+      10: dup
+      11: invokespecial #49                 // Method it/unimi/dsi/fastutil/objects/Object2ObjectOpenHashMap."<init>":()V
+      14: putfield      #52                 // Field loopTrackerLookup:Lit/unimi/dsi/fastutil/objects/Object2ObjectMap;
+      17: aload_0
+      18: iconst_5
+      19: putfield      #56                 // Field loopMax:I
+      22: aload_0
+      23: bipush        20
+      25: putfield      #59                 // Field loopTickWindow:I
+      28: aload_0
+      29: lconst_0
+      30: putfield      #41                 // Field ticksToLive:J
+      33: aload_0
+      34: iconst_0
+      35: putfield      #62                 // Field isPortalConnected:Z
+      38: return
+
+  public void onAntiMagic(io.redspace.ironsspellbooks.api.magic.MagicData);
+    Code:
+       0: aload_0
+       1: getfield      #66                 // Field level:Lnet/minecraft/world/level/Level;
+       4: getfield      #70                 // Field net/minecraft/world/level/Level.isClientSide:Z
+       7: ifne          14
+      10: aload_0
+      11: invokevirtual #75                 // Method discard:()V
+      14: return
+
+  public boolean clearPortalOnDeath();
+    Code:
+       0: iconst_1
+       1: ireturn
+
+  public void onRemovedFromLevel();
+    Code:
+       0: aload_0
+       1: getfield      #66                 // Field level:Lnet/minecraft/world/level/Level;
+       4: getfield      #70                 // Field net/minecraft/world/level/Level.isClientSide:Z
+       7: ifne          105
+      10: aload_0
+      11: invokevirtual #78                 // Method clearPortalOnDeath:()Z
+      14: ifeq          105
+      17: aload_0
+      18: invokevirtual #82                 // Method getRemovalReason:()Lnet/minecraft/world/entity/Entity$RemovalReason;
+      21: astore_1
+      22: aload_1
+      23: ifnull        47
+      26: aload_1
+      27: invokevirtual #86                 // Method net/minecraft/world/entity/Entity$RemovalReason.shouldDestroy:()Z
+      30: ifeq          47
+      33: getstatic     #21                 // Field io/redspace/ironsspellbooks/capabilities/magic/PortalManager.INSTANCE:Lio/redspace/ironsspellbooks/capabilities/magic/PortalManager;
+      36: aload_0
+      37: getfield      #27                 // Field uuid:Ljava/util/UUID;
+      40: aload_0
+      41: invokevirtual #91                 // Method getOwnerUUID:()Ljava/util/UUID;
+      44: invokevirtual #95                 // Method io/redspace/ironsspellbooks/capabilities/magic/PortalManager.killPortal:(Ljava/util/UUID;Ljava/util/UUID;)V
+      47: aload_0
+      48: getfield      #66                 // Field level:Lnet/minecraft/world/level/Level;
+      51: new           #99                 // class io/redspace/ironsspellbooks/particle/SparkParticleOptions
+      54: dup
+      55: new           #101                // class org/joml/Vector3f
+      58: dup
+      59: ldc           #103                // float 0.5f
+      61: ldc           #104                // float 0.05f
+      63: ldc           #105                // float 0.6f
+      65: invokespecial #106                // Method org/joml/Vector3f."<init>":(FFF)V
+      68: invokespecial #109                // Method io/redspace/ironsspellbooks/particle/SparkParticleOptions."<init>":(Lorg/joml/Vector3f;)V
+      71: aload_0
+      72: invokevirtual #112                // Method getX:()D
+      75: aload_0
+      76: invokevirtual #116                // Method getY:()D
+      79: ldc2_w        #119                // double 0.5d
+      82: dadd
+      83: aload_0
+      84: invokevirtual #121                // Method getZ:()D
+      87: bipush        25
+      89: ldc2_w        #124                // double 0.2d
+      92: ldc2_w        #126                // double 0.4d
+      95: ldc2_w        #124                // double 0.2d
+      98: ldc2_w        #128                // double 0.3d
+     101: iconst_0
+     102: invokestatic  #130                // Method io/redspace/ironsspellbooks/capabilities/magic/MagicManager.spawnParticles:(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/particles/ParticleOptions;DDDIDDDDZ)V
+     105: aload_0
+     106: invokespecial #136                // Method net/minecraft/world/entity/Entity.onRemovedFromLevel:()V
+     109: return
+
+  private void handleLoopTracking(net.minecraft.world.entity.Entity);
+    Code:
+       0: aload_0
+       1: getfield      #52                 // Field loopTrackerLookup:Lit/unimi/dsi/fastutil/objects/Object2ObjectMap;
+       4: aload_1
+       5: invokevirtual #139                // Method net/minecraft/world/entity/Entity.getUUID:()Ljava/util/UUID;
+       8: invokeinterface #142,  2          // InterfaceMethod it/unimi/dsi/fastutil/objects/Object2ObjectMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      13: checkcast     #147                // class io/redspace/ironsspellbooks/entity/spells/portal/PortalEntity$LoopTrackerData
+      16: astore_2
+      17: aload_2
+      18: ifnonnull     56
+      21: new           #147                // class io/redspace/ironsspellbooks/entity/spells/portal/PortalEntity$LoopTrackerData
+      24: dup
+      25: aload_0
+      26: aload_0
+      27: getfield      #66                 // Field level:Lnet/minecraft/world/level/Level;
+      30: invokevirtual #149                // Method net/minecraft/world/level/Level.getGameTime:()J
+      33: iconst_1
+      34: invokespecial #153                // Method io/redspace/ironsspellbooks/entity/spells/portal/PortalEntity$LoopTrackerData."<init>":(Lio/redspace/ironsspellbooks/entity/spells/portal/PortalEntity;JI)V
+      37: astore_2
+      38: aload_0
+      39: getfield      #52                 // Field loopTrackerLookup:Lit/unimi/dsi/fastutil/objects/Object2ObjectMap;
+      42: aload_1
+      43: invokevirtual #139                // Method net/minecraft/world/entity/Entity.getUUID:()Ljava/util/UUID;
+      46: aload_2
+      47: invokeinterface #156,  3          // InterfaceMethod it/unimi/dsi/fastutil/objects/Object2ObjectMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      52: pop
+      53: goto          209
+      56: getstatic     #160                // Field io/redspace/ironsspellbooks/IronsSpellbooks.LOGGER:Lorg/slf4j/Logger;
+      59: ldc           #166                // String looping
+      61: invokeinterface #168,  2          // InterfaceMethod org/slf4j/Logger.debug:(Ljava/lang/String;)V
+      66: aload_2
+      67: dup
+      68: getfield      #174                // Field io/redspace/ironsspellbooks/entity/spells/portal/PortalEntity$LoopTrackerData.loopCount:I
+      71: iconst_1
+      72: iadd
+      73: dup_x1
+      74: putfield      #174                // Field io/redspace/ironsspellbooks/entity/spells/portal/PortalEntity$LoopTrackerData.loopCount:I
+      77: iconst_5
+      78: if_icmple     176
+      81: aload_0
+      82: getfield      #66                 // Field level:Lnet/minecraft/world/level/Level;
+      85: invokevirtual #149                // Method net/minecraft/world/level/Level.getGameTime:()J
+      88: aload_2
+      89: getfield      #177                // Field io/redspace/ironsspellbooks/entity/spells/portal/PortalEntity$LoopTrackerData.gameTick:J
+      92: lsub
+      93: ldc2_w        #180                // long 20l
+      96: lcmp
+      97: ifgt          176
+     100: aload_0
+     101: invokevirtual #91                 // Method getOwnerUUID:()Ljava/util/UUID;
+     104: aload_1
+     105: invokevirtual #139                // Method net/minecraft/world/entity/Entity.getUUID:()Ljava/util/UUID;
+     108: invokevirtual #182                // Method java/util/UUID.equals:(Ljava/lang/Object;)Z
+     111: ifeq          169
+     114: aload_1
+     115: new           #188                // class io/redspace/ironsspellbooks/damage/PortalDamageSource
+     118: dup
+     119: aload_1
+     120: invokevirtual #190                // Method net/minecraft/world/entity/Entity.level:()Lnet/minecraft/world/level/Level;
+     123: invokevirtual #193                // Method net/minecraft/world/level/Level.damageSources:()Lnet/minecraft/world/damagesource/DamageSources;
+     126: invokevirtual #197                // Method net/minecraft/world/damagesource/DamageSources.genericKill:()Lnet/minecraft/world/damagesource/DamageSource;
+     129: invokevirtual #203                // Method net/minecraft/world/damagesource/DamageSource.typeHolder:()Lnet/minecraft/core/Holder;
+     132: aload_1
+     133: invokespecial #209                // Method io/redspace/ironsspellbooks/damage/PortalDamageSource."<init>":(Lnet/minecraft/core/Holder;Lnet/minecraft/world/entity/Entity;)V
+     136: ldc           #214                // float 3.4028235E38f
+     138: invokevirtual #215                // Method net/minecraft/world/entity/Entity.hurt:(Lnet/minecraft/world/damagesource/DamageSource;F)Z
+     141: pop
+     142: aload_1
+     143: instanceof    #219                // class net/minecraft/world/entity/LivingEntity
+     146: ifeq          169
+     149: aload_1
+     150: checkcast     #219                // class net/minecraft/world/entity/LivingEntity
+     153: astore_3
+     154: aload_3
+     155: invokevirtual #221                // Method net/minecraft/world/entity/LivingEntity.getHealth:()F
+     158: invokestatic  #225                // Method java/lang/Float.isNaN:(F)Z
+     161: ifeq          169
+     164: aload_3
+     165: fconst_0
+     166: invokevirtual #229                // Method net/minecraft/world/entity/LivingEntity.setHealth:(F)V
+     169: aload_0
+     170: invokevirtual #75                 // Method discard:()V
+     173: goto          209
+     176: aload_0
+     177: getfield      #66                 // Field level:Lnet/minecraft/world/level/Level;
+     180: invokevirtual #149                // Method net/minecraft/world/level/Level.getGameTime:()J
+     183: aload_2
+     184: getfield      #177                // Field io/redspace/ironsspellbooks/entity/spells/portal/PortalEntity$LoopTrackerData.gameTick:J
+     187: lsub
+     188: ldc2_w        #180                // long 20l
+     191: lcmp
+     192: ifle          209
+     195: aload_0
+     196: getfield      #52                 // Field loopTrackerLookup:Lit/unimi/dsi/fastutil/objects/Object2ObjectMap;
+     199: aload_1
+     200: invokevirtual #139                // Method net/minecraft/world/entity/Entity.getUUID:()Ljava/util/UUID;
+     203: invokeinterface #233,  2          // InterfaceMethod it/unimi/dsi/fastutil/objects/Object2ObjectMap.remove:(Ljava/lang/Object;)Ljava/lang/Object;
+     208: pop
+     209: return
+
+  public void checkForEntitiesToTeleport();
+    Code:
+       0: aload_0
+       1: getfield      #66                 // Field level:Lnet/minecraft/world/level/Level;
+       4: getfield      #70                 // Field net/minecraft/world/level/Level.isClientSide:Z
+       7: ifeq          11
+      10: return
+      11: aload_0
+      12: getfield      #66                 // Field level:Lnet/minecraft/world/level/Level;
+      15: aconst_null
+      16: checkcast     #45                 // class net/minecraft/world/entity/Entity
+      19: aload_0
+      20: invokevirtual #236                // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+      23: invokedynamic #240,  0            // InvokeDynamic #0:test:()Ljava/util/function/Predicate;
+      28: invokevirtual #244                // Method net/minecraft/world/level/Level.getEntities:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;
+      31: aload_0
+      32: invokedynamic #248,  0            // InvokeDynamic #1:accept:(Lio/redspace/ironsspellbooks/entity/spells/portal/PortalEntity;)Ljava/util/function/Consumer;
+      37: invokeinterface #252,  2          // InterfaceMethod java/util/List.forEach:(Ljava/util/function/Consumer;)V
+      42: return
+
+  private net.minecraft.world.phys.Vec3 getDestinationPosition(io.redspace.ironsspellbooks.entity.spells.portal.PortalPos, net.minecraft.world.entity.Entity);
+    Code:
+       0: new           #258                // class net/minecraft/world/phys/Vec3
+       3: dup
+       4: aload_0
+       5: invokevirtual #112                // Method getX:()D
+       8: aload_2
+       9: invokevirtual #260                // Method net/minecraft/world/entity/Entity.getX:()D
+      12: dsub
+      13: aload_0
+      14: invokevirtual #116                // Method getY:()D
+      17: aload_2
+      18: invokevirtual #261                // Method net/minecraft/world/entity/Entity.getY:()D
+      21: dsub
+      22: aload_0
+      23: invokevirtual #121                // Method getZ:()D
+      26: aload_2
+      27: invokevirtual #262                // Method net/minecraft/world/entity/Entity.getZ:()D
+      30: dsub
+      31: invokespecial #263                // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+      34: astore_3
+      35: new           #258                // class net/minecraft/world/phys/Vec3
+      38: dup
+      39: aload_1
+      40: invokevirtual #266                // Method io/redspace/ironsspellbooks/entity/spells/portal/PortalPos.pos:()Lnet/minecraft/world/phys/Vec3;
+      43: getfield      #272                // Field net/minecraft/world/phys/Vec3.x:D
+      46: aload_3
+      47: getfield      #272                // Field net/minecraft/world/phys/Vec3.x:D
+      50: dsub
+      51: aload_1
+      52: invokevirtual #266                // Method io/redspace/ironsspellbooks/entity/spells/portal/PortalPos.pos:()Lnet/minecraft/world/phys/Vec3;
+      55: getfield      #276                // Field net/minecraft/world/phys/Vec3.y:D
+      58: aload_3
+      59: getfield      #276                // Field net/minecraft/world/phys/Vec3.y:D
+      62: dsub
+      63: aload_1
+      64: invokevirtual #266                // Method io/redspace/ironsspellbooks/entity/spells/portal/PortalPos.pos:()Lnet/minecraft/world/phys/Vec3;
+      67: getfield      #279                // Field net/minecraft/world/phys/Vec3.z:D
+      70: aload_3
+      71: getfield      #279                // Field net/minecraft/world/phys/Vec3.z:D
+      74: dsub
+      75: invokespecial #263                // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+      78: areturn
+
+  public void setTicksToLive(int);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: i2l
+       3: putfield      #41                 // Field ticksToLive:J
+       6: return
+
+  public void tick();
+    Code:
+       0: aload_0
+       1: getfield      #66                 // Field level:Lnet/minecraft/world/level/Level;
+       4: getfield      #70                 // Field net/minecraft/world/level/Level.isClientSide:Z
+       7: ifeq          63
+      10: aload_0
+      11: invokevirtual #236                // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+      14: invokevirtual #282                // Method net/minecraft/world/phys/AABB.getCenter:()Lnet/minecraft/world/phys/Vec3;
+      17: astore_1
+      18: iconst_0
+      19: istore_2
+      20: iload_2
+      21: iconst_2
+      22: if_icmpge     62
+      25: aload_0
+      26: getfield      #66                 // Field level:Lnet/minecraft/world/level/Level;
+      29: getstatic     #287                // Field io/redspace/ironsspellbooks/util/ParticleHelper.PORTAL_FRAME:Lnet/minecraft/core/particles/ParticleOptions;
+      32: aload_1
+      33: getfield      #272                // Field net/minecraft/world/phys/Vec3.x:D
+      36: aload_1
+      37: getfield      #276                // Field net/minecraft/world/phys/Vec3.y:D
+      40: aload_1
+      41: getfield      #279                // Field net/minecraft/world/phys/Vec3.z:D
+      44: dconst_1
+      45: ldc2_w        #293                // double 2.0999999046325684d
+      48: aload_0
+      49: invokevirtual #295                // Method getYRot:()F
+      52: f2d
+      53: invokevirtual #298                // Method net/minecraft/world/level/Level.addParticle:(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V
+      56: iinc          2, 1
+      59: goto          20
+      62: return
+      63: getstatic     #21                 // Field io/redspace/ironsspellbooks/capabilities/magic/PortalManager.INSTANCE:Lio/redspace/ironsspellbooks/capabilities/magic/PortalManager;
+      66: aload_0
+      67: getfield      #27                 // Field uuid:Ljava/util/UUID;
+      70: iconst_m1
+      71: invokevirtual #302                // Method io/redspace/ironsspellbooks/capabilities/magic/PortalManager.processCooldownTick:(Ljava/util/UUID;I)V
+      74: aload_0
+      75: invokevirtual #306                // Method checkForEntitiesToTeleport:()V
+      78: aload_0
+      79: dup
+      80: getfield      #41                 // Field ticksToLive:J
+      83: lconst_1
+      84: lsub
+      85: dup2_x1
+      86: putfield      #41                 // Field ticksToLive:J
+      89: lconst_0
+      90: lcmp
+      91: ifgt          98
+      94: aload_0
+      95: invokevirtual #75                 // Method discard:()V
+      98: return
+
+  public void setOwnerUUID(java.util.UUID);
+    Code:
+       0: aload_0
+       1: getfield      #309                // Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;
+       4: getstatic     #313                // Field DATA_ID_OWNER_UUID:Lnet/minecraft/network/syncher/EntityDataAccessor;
+       7: aload_1
+       8: invokestatic  #317                // Method java/util/Optional.ofNullable:(Ljava/lang/Object;)Ljava/util/Optional;
+      11: invokevirtual #323                // Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V
+      14: return
+
+  public java.util.UUID getOwnerUUID();
+    Code:
+       0: aload_0
+       1: getfield      #309                // Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;
+       4: getstatic     #313                // Field DATA_ID_OWNER_UUID:Lnet/minecraft/network/syncher/EntityDataAccessor;
+       7: invokevirtual #329                // Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;
+      10: checkcast     #318                // class java/util/Optional
+      13: aload_0
+      14: invokedynamic #332,  0            // InvokeDynamic #2:get:(Lio/redspace/ironsspellbooks/entity/spells/portal/PortalEntity;)Ljava/util/function/Supplier;
+      19: invokevirtual #335                // Method java/util/Optional.orElseGet:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+      22: checkcast     #183                // class java/util/UUID
+      25: areturn
+
+  public void setPortalConnected();
+    Code:
+       0: aload_0
+       1: getfield      #309                // Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;
+       4: getstatic     #339                // Field DATA_PORTAL_CONNECTED:Lnet/minecraft/network/syncher/EntityDataAccessor;
+       7: iconst_1
+       8: invokestatic  #342                // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+      11: invokevirtual #323                // Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V
+      14: return
+
+  public boolean getPortalConnected();
+    Code:
+       0: aload_0
+       1: getfield      #309                // Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;
+       4: getstatic     #339                // Field DATA_PORTAL_CONNECTED:Lnet/minecraft/network/syncher/EntityDataAccessor;
+       7: invokevirtual #329                // Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;
+      10: checkcast     #343                // class java/lang/Boolean
+      13: invokevirtual #348                // Method java/lang/Boolean.booleanValue:()Z
+      16: ireturn
+
+  protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData$Builder);
+    Code:
+       0: aload_1
+       1: getstatic     #313                // Field DATA_ID_OWNER_UUID:Lnet/minecraft/network/syncher/EntityDataAccessor;
+       4: invokestatic  #351                // Method java/util/Optional.empty:()Ljava/util/Optional;
+       7: invokevirtual #355                // Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;
+      10: pop
+      11: aload_1
+      12: getstatic     #339                // Field DATA_PORTAL_CONNECTED:Lnet/minecraft/network/syncher/EntityDataAccessor;
+      15: iconst_0
+      16: invokestatic  #342                // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+      19: invokevirtual #355                // Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;
+      22: pop
+      23: return
+
+  public void onSyncedDataUpdated(net.minecraft.network.syncher.EntityDataAccessor<?>);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #361                // Method net/minecraft/world/entity/Entity.onSyncedDataUpdated:(Lnet/minecraft/network/syncher/EntityDataAccessor;)V
+       5: aload_0
+       6: getfield      #66                 // Field level:Lnet/minecraft/world/level/Level;
+       9: getfield      #70                 // Field net/minecraft/world/level/Level.isClientSide:Z
+      12: ifne          16
+      15: return
+      16: aload_1
+      17: invokevirtual #365                // Method net/minecraft/network/syncher/EntityDataAccessor.id:()I
+      20: getstatic     #339                // Field DATA_PORTAL_CONNECTED:Lnet/minecraft/network/syncher/EntityDataAccessor;
+      23: invokevirtual #365                // Method net/minecraft/network/syncher/EntityDataAccessor.id:()I
+      26: if_icmpne     37
+      29: aload_0
+      30: aload_0
+      31: invokevirtual #371                // Method getPortalConnected:()Z
+      34: putfield      #62                 // Field isPortalConnected:Z
+      37: return
+
+  protected void readAdditionalSaveData(net.minecraft.nbt.CompoundTag);
+    Code:
+       0: aload_1
+       1: ldc_w         #374                // String ownerUUID
+       4: invokevirtual #376                // Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;)Z
+       7: ifeq          21
+      10: aload_0
+      11: aload_1
+      12: ldc_w         #374                // String ownerUUID
+      15: invokevirtual #382                // Method net/minecraft/nbt/CompoundTag.getUUID:(Ljava/lang/String;)Ljava/util/UUID;
+      18: invokevirtual #385                // Method setOwnerUUID:(Ljava/util/UUID;)V
+      21: aload_1
+      22: ldc_w         #389                // String ticksToLive
+      25: invokevirtual #376                // Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;)Z
+      28: ifeq          42
+      31: aload_0
+      32: aload_1
+      33: ldc_w         #389                // String ticksToLive
+      36: invokevirtual #390                // Method net/minecraft/nbt/CompoundTag.getLong:(Ljava/lang/String;)J
+      39: putfield      #41                 // Field ticksToLive:J
+      42: getstatic     #21                 // Field io/redspace/ironsspellbooks/capabilities/magic/PortalManager.INSTANCE:Lio/redspace/ironsspellbooks/capabilities/magic/PortalManager;
+      45: aload_0
+      46: invokevirtual #394                // Method io/redspace/ironsspellbooks/capabilities/magic/PortalManager.getPortalData:(Lio/redspace/ironsspellbooks/entity/spells/portal/PortalEntity;)Lio/redspace/ironsspellbooks/entity/spells/portal/PortalData;
+      49: astore_2
+      50: aload_2
+      51: ifnonnull     62
+      54: aload_0
+      55: lconst_0
+      56: putfield      #41                 // Field ticksToLive:J
+      59: goto          80
+      62: aload_2
+      63: getfield      #398                // Field io/redspace/ironsspellbooks/entity/spells/portal/PortalData.portalEntityId1:Ljava/util/UUID;
+      66: ifnull        80
+      69: aload_2
+      70: getfield      #401                // Field io/redspace/ironsspellbooks/entity/spells/portal/PortalData.portalEntityId2:Ljava/util/UUID;
+      73: ifnull        80
+      76: aload_0
+      77: invokevirtual #404                // Method setPortalConnected:()V
+      80: return
+
+  protected void addAdditionalSaveData(net.minecraft.nbt.CompoundTag);
+    Code:
+       0: aload_1
+       1: ldc_w         #389                // String ticksToLive
+       4: aload_0
+       5: getfield      #41                 // Field ticksToLive:J
+       8: invokevirtual #407                // Method net/minecraft/nbt/CompoundTag.putLong:(Ljava/lang/String;J)V
+      11: aload_1
+      12: ldc_w         #374                // String ownerUUID
+      15: aload_0
+      16: invokevirtual #91                 // Method getOwnerUUID:()Ljava/util/UUID;
+      19: invokevirtual #411                // Method net/minecraft/nbt/CompoundTag.putUUID:(Ljava/lang/String;Ljava/util/UUID;)V
+      22: return
+
+  private java.util.UUID lambda$getOwnerUUID$3();
+    Code:
+       0: aload_0
+       1: getfield      #309                // Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;
+       4: getstatic     #313                // Field DATA_ID_OWNER_UUID:Lnet/minecraft/network/syncher/EntityDataAccessor;
+       7: invokevirtual #329                // Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;
+      10: checkcast     #318                // class java/util/Optional
+      13: aconst_null
+      14: invokevirtual #415                // Method java/util/Optional.orElse:(Ljava/lang/Object;)Ljava/lang/Object;
+      17: checkcast     #183                // class java/util/UUID
+      20: areturn
+
+  private void lambda$checkForEntitiesToTeleport$2(net.minecraft.world.entity.Entity);
+    Code:
+       0: getstatic     #21                 // Field io/redspace/ironsspellbooks/capabilities/magic/PortalManager.INSTANCE:Lio/redspace/ironsspellbooks/capabilities/magic/PortalManager;
+       3: aload_0
+       4: getfield      #27                 // Field uuid:Ljava/util/UUID;
+       7: aload_1
+       8: invokevirtual #139                // Method net/minecraft/world/entity/Entity.getUUID:()Ljava/util/UUID;
+      11: iconst_1
+      12: invokevirtual #418                // Method io/redspace/ironsspellbooks/capabilities/magic/PortalManager.processDelayCooldown:(Ljava/util/UUID;Ljava/util/UUID;I)V
+      15: getstatic     #21                 // Field io/redspace/ironsspellbooks/capabilities/magic/PortalManager.INSTANCE:Lio/redspace/ironsspellbooks/capabilities/magic/PortalManager;
+      18: aload_0
+      19: aload_1
+      20: invokevirtual #422                // Method io/redspace/ironsspellbooks/capabilities/magic/PortalManager.canUsePortal:(Lio/redspace/ironsspellbooks/entity/spells/portal/PortalEntity;Lnet/minecraft/world/entity/Entity;)Z
+      23: ifeq          63
+      26: getstatic     #21                 // Field io/redspace/ironsspellbooks/capabilities/magic/PortalManager.INSTANCE:Lio/redspace/ironsspellbooks/capabilities/magic/PortalManager;
+      29: aload_1
+      30: aload_0
+      31: getfield      #27                 // Field uuid:Ljava/util/UUID;
+      34: invokevirtual #426                // Method io/redspace/ironsspellbooks/capabilities/magic/PortalManager.addPortalCooldown:(Lnet/minecraft/world/entity/Entity;Ljava/util/UUID;)V
+      37: getstatic     #21                 // Field io/redspace/ironsspellbooks/capabilities/magic/PortalManager.INSTANCE:Lio/redspace/ironsspellbooks/capabilities/magic/PortalManager;
+      40: aload_0
+      41: invokevirtual #394                // Method io/redspace/ironsspellbooks/capabilities/magic/PortalManager.getPortalData:(Lio/redspace/ironsspellbooks/entity/spells/portal/PortalEntity;)Lio/redspace/ironsspellbooks/entity/spells/portal/PortalData;
+      44: astore_2
+      45: aload_2
+      46: aload_0
+      47: getfield      #27                 // Field uuid:Ljava/util/UUID;
+      50: invokevirtual #430                // Method io/redspace/ironsspellbooks/entity/spells/portal/PortalData.getConnectedPortalPos:(Ljava/util/UUID;)Ljava/util/Optional;
+      53: aload_0
+      54: aload_1
+      55: invokedynamic #434,  0            // InvokeDynamic #3:accept:(Lio/redspace/ironsspellbooks/entity/spells/portal/PortalEntity;Lnet/minecraft/world/entity/Entity;)Ljava/util/function/Consumer;
+      60: invokevirtual #437                // Method java/util/Optional.ifPresent:(Ljava/util/function/Consumer;)V
+      63: return
+
+  private void lambda$checkForEntitiesToTeleport$1(net.minecraft.world.entity.Entity, io.redspace.ironsspellbooks.entity.spells.portal.PortalPos);
+    Code:
+       0: aload_2
+       1: invokevirtual #266                // Method io/redspace/ironsspellbooks/entity/spells/portal/PortalPos.pos:()Lnet/minecraft/world/phys/Vec3;
+       4: dconst_0
+       5: aload_1
+       6: invokevirtual #261                // Method net/minecraft/world/entity/Entity.getY:()D
+       9: aload_0
+      10: invokevirtual #116                // Method getY:()D
+      13: dsub
+      14: dconst_0
+      15: invokevirtual #440                // Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;
+      18: astore_3
+      19: aload_1
+      20: aload_2
+      21: invokevirtual #444                // Method io/redspace/ironsspellbooks/entity/spells/portal/PortalPos.rotation:()F
+      24: invokevirtual #447                // Method net/minecraft/world/entity/Entity.setYRot:(F)V
+      27: aload_0
+      28: getfield      #66                 // Field level:Lnet/minecraft/world/level/Level;
+      31: aconst_null
+      32: aload_0
+      33: invokevirtual #450                // Method blockPosition:()Lnet/minecraft/core/BlockPos;
+      36: getstatic     #454                // Field net/minecraft/sounds/SoundEvents.ENDERMAN_TELEPORT:Lnet/minecraft/sounds/SoundEvent;
+      39: getstatic     #460                // Field net/minecraft/sounds/SoundSource.NEUTRAL:Lnet/minecraft/sounds/SoundSource;
+      42: fconst_1
+      43: fconst_1
+      44: invokevirtual #466                // Method net/minecraft/world/level/Level.playSound:(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;Lnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FF)V
+      47: aload_0
+      48: getfield      #66                 // Field level:Lnet/minecraft/world/level/Level;
+      51: invokevirtual #470                // Method net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;
+      54: aload_2
+      55: invokevirtual #474                // Method io/redspace/ironsspellbooks/entity/spells/portal/PortalPos.dimension:()Lnet/minecraft/resources/ResourceKey;
+      58: invokevirtual #475                // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+      61: ifeq          165
+      64: aload_1
+      65: aload_3
+      66: getfield      #272                // Field net/minecraft/world/phys/Vec3.x:D
+      69: aload_3
+      70: getfield      #276                // Field net/minecraft/world/phys/Vec3.y:D
+      73: ldc2_w        #478                // double 0.1d
+      76: dadd
+      77: aload_3
+      78: getfield      #279                // Field net/minecraft/world/phys/Vec3.z:D
+      81: invokevirtual #480                // Method net/minecraft/world/entity/Entity.teleportTo:(DDD)V
+      84: aload_1
+      85: invokevirtual #483                // Method net/minecraft/world/entity/Entity.getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;
+      88: astore        4
+      90: aload         4
+      92: getfield      #272                // Field net/minecraft/world/phys/Vec3.x:D
+      95: aload         4
+      97: getfield      #272                // Field net/minecraft/world/phys/Vec3.x:D
+     100: dmul
+     101: aload         4
+     103: getfield      #279                // Field net/minecraft/world/phys/Vec3.z:D
+     106: aload         4
+     108: getfield      #279                // Field net/minecraft/world/phys/Vec3.z:D
+     111: dmul
+     112: dadd
+     113: invokestatic  #486                // Method java/lang/Math.sqrt:(D)D
+     116: d2f
+     117: fstore        5
+     119: aload_2
+     120: invokevirtual #444                // Method io/redspace/ironsspellbooks/entity/spells/portal/PortalPos.rotation:()F
+     123: ldc_w         #494                // float 0.017453292f
+     126: fmul
+     127: fstore        6
+     129: aload_1
+     130: fload         6
+     132: invokestatic  #495                // Method net/minecraft/util/Mth.sin:(F)F
+     135: fneg
+     136: fload         5
+     138: fmul
+     139: f2d
+     140: aload         4
+     142: getfield      #276                // Field net/minecraft/world/phys/Vec3.y:D
+     145: fload         6
+     147: invokestatic  #499                // Method net/minecraft/util/Mth.cos:(F)F
+     150: fload         5
+     152: fmul
+     153: f2d
+     154: invokevirtual #502                // Method net/minecraft/world/entity/Entity.setDeltaMovement:(DDD)V
+     157: aload_0
+     158: aload_1
+     159: invokevirtual #505                // Method handleLoopTracking:(Lnet/minecraft/world/entity/Entity;)V
+     162: goto          224
+     165: aload_0
+     166: getfield      #66                 // Field level:Lnet/minecraft/world/level/Level;
+     169: invokevirtual #509                // Method net/minecraft/world/level/Level.getServer:()Lnet/minecraft/server/MinecraftServer;
+     172: astore        4
+     174: aload         4
+     176: ifnull        224
+     179: aload         4
+     181: aload_2
+     182: invokevirtual #474                // Method io/redspace/ironsspellbooks/entity/spells/portal/PortalPos.dimension:()Lnet/minecraft/resources/ResourceKey;
+     185: invokevirtual #513                // Method net/minecraft/server/MinecraftServer.getLevel:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/server/level/ServerLevel;
+     188: astore        5
+     190: aload         5
+     192: ifnull        224
+     195: aload_1
+     196: new           #519                // class net/minecraft/world/level/portal/DimensionTransition
+     199: dup
+     200: aload         5
+     202: aload_3
+     203: getstatic     #521                // Field net/minecraft/world/phys/Vec3.ZERO:Lnet/minecraft/world/phys/Vec3;
+     206: aload_1
+     207: invokevirtual #525                // Method net/minecraft/world/entity/Entity.getYRot:()F
+     210: aload_1
+     211: invokevirtual #526                // Method net/minecraft/world/entity/Entity.getXRot:()F
+     214: getstatic     #529                // Field net/minecraft/world/level/portal/DimensionTransition.DO_NOTHING:Lnet/minecraft/world/level/portal/DimensionTransition$PostDimensionTransition;
+     217: invokespecial #533                // Method net/minecraft/world/level/portal/DimensionTransition."<init>":(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;FFLnet/minecraft/world/level/portal/DimensionTransition$PostDimensionTransition;)V
+     220: invokevirtual #536                // Method net/minecraft/world/entity/Entity.changeDimension:(Lnet/minecraft/world/level/portal/DimensionTransition;)Lnet/minecraft/world/entity/Entity;
+     223: pop
+     224: aload_0
+     225: getfield      #66                 // Field level:Lnet/minecraft/world/level/Level;
+     228: aconst_null
+     229: aload_3
+     230: getfield      #272                // Field net/minecraft/world/phys/Vec3.x:D
+     233: aload_3
+     234: getfield      #276                // Field net/minecraft/world/phys/Vec3.y:D
+     237: aload_3
+     238: getfield      #279                // Field net/minecraft/world/phys/Vec3.z:D
+     241: getstatic     #454                // Field net/minecraft/sounds/SoundEvents.ENDERMAN_TELEPORT:Lnet/minecraft/sounds/SoundEvent;
+     244: getstatic     #460                // Field net/minecraft/sounds/SoundSource.NEUTRAL:Lnet/minecraft/sounds/SoundSource;
+     247: fconst_1
+     248: fconst_1
+     249: invokevirtual #540                // Method net/minecraft/world/level/Level.playSound:(Lnet/minecraft/world/entity/player/Player;DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FF)V
+     252: return
+
+  private static boolean lambda$checkForEntitiesToTeleport$0(net.minecraft.world.entity.Entity);
+    Code:
+       0: aload_0
+       1: invokevirtual #543                // Method net/minecraft/world/entity/Entity.getType:()Lnet/minecraft/world/entity/EntityType;
+       4: getstatic     #547                // Field io/redspace/ironsspellbooks/util/ModTags.CANT_USE_PORTAL:Lnet/minecraft/tags/TagKey;
+       7: invokevirtual #553                // Method net/minecraft/world/entity/EntityType.is:(Lnet/minecraft/tags/TagKey;)Z
+      10: ifne          45
+      13: aload_0
+      14: invokevirtual #557                // Method net/minecraft/world/entity/Entity.isPickable:()Z
+      17: ifne          27
+      20: aload_0
+      21: instanceof    #560                // class net/minecraft/world/entity/projectile/Projectile
+      24: ifeq          45
+      27: aload_0
+      28: invokevirtual #562                // Method net/minecraft/world/entity/Entity.isVehicle:()Z
+      31: ifne          45
+      34: aload_0
+      35: invokevirtual #565                // Method net/minecraft/world/entity/Entity.isSpectator:()Z
+      38: ifne          45
+      41: iconst_1
+      42: goto          46
+      45: iconst_0
+      46: ireturn
+
+  static {};
+    Code:
+       0: ldc           #16                 // class io/redspace/ironsspellbooks/entity/spells/portal/PortalEntity
+       2: getstatic     #568                // Field net/minecraft/network/syncher/EntityDataSerializers.OPTIONAL_UUID:Lnet/minecraft/network/syncher/EntityDataSerializer;
+       5: invokestatic  #574                // Method net/minecraft/network/syncher/SynchedEntityData.defineId:(Ljava/lang/Class;Lnet/minecraft/network/syncher/EntityDataSerializer;)Lnet/minecraft/network/syncher/EntityDataAccessor;
+       8: putstatic     #313                // Field DATA_ID_OWNER_UUID:Lnet/minecraft/network/syncher/EntityDataAccessor;
+      11: ldc           #16                 // class io/redspace/ironsspellbooks/entity/spells/portal/PortalEntity
+      13: getstatic     #578                // Field net/minecraft/network/syncher/EntityDataSerializers.BOOLEAN:Lnet/minecraft/network/syncher/EntityDataSerializer;
+      16: invokestatic  #574                // Method net/minecraft/network/syncher/SynchedEntityData.defineId:(Ljava/lang/Class;Lnet/minecraft/network/syncher/EntityDataSerializer;)Lnet/minecraft/network/syncher/EntityDataAccessor;
+      19: putstatic     #339                // Field DATA_PORTAL_CONNECTED:Lnet/minecraft/network/syncher/EntityDataAccessor;
+      22: return
+}

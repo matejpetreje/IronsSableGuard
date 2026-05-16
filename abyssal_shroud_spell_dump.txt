@@ -1,0 +1,130 @@
+Compiled from "AbyssalShroudSpell.java"
+public class io.redspace.ironsspellbooks.spells.eldritch.AbyssalShroudSpell extends io.redspace.ironsspellbooks.api.spells.AbstractSpell {
+  private final net.minecraft.resources.ResourceLocation spellId;
+
+  private final io.redspace.ironsspellbooks.api.config.DefaultConfig defaultConfig;
+
+  public java.util.List<net.minecraft.network.chat.MutableComponent> getUniqueInfo(int, net.minecraft.world.entity.LivingEntity);
+    Code:
+       0: ldc           #1                  // String ui.irons_spellbooks.effect_length
+       2: iconst_1
+       3: anewarray     #3                  // class java/lang/Object
+       6: dup
+       7: iconst_0
+       8: aload_0
+       9: iload_1
+      10: aload_2
+      11: invokevirtual #5                  // Method getSpellPower:(ILnet/minecraft/world/entity/Entity;)F
+      14: ldc           #11                 // float 20.0f
+      16: fmul
+      17: iconst_1
+      18: invokestatic  #12                 // Method io/redspace/ironsspellbooks/api/util/Utils.timeFromTicks:(FI)Ljava/lang/String;
+      21: aastore
+      22: invokestatic  #18                 // InterfaceMethod net/minecraft/network/chat/Component.translatable:(Ljava/lang/String;[Ljava/lang/Object;)Lnet/minecraft/network/chat/MutableComponent;
+      25: invokestatic  #24                 // InterfaceMethod java/util/List.of:(Ljava/lang/Object;)Ljava/util/List;
+      28: areturn
+
+  public io.redspace.ironsspellbooks.spells.eldritch.AbyssalShroudSpell();
+    Code:
+       0: aload_0
+       1: invokespecial #30                 // Method io/redspace/ironsspellbooks/api/spells/AbstractSpell."<init>":()V
+       4: aload_0
+       5: ldc           #38                 // String irons_spellbooks
+       7: ldc           #40                 // String abyssal_shroud
+       9: invokestatic  #42                 // Method net/minecraft/resources/ResourceLocation.fromNamespaceAndPath:(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;
+      12: putfield      #48                 // Field spellId:Lnet/minecraft/resources/ResourceLocation;
+      15: aload_0
+      16: new           #52                 // class io/redspace/ironsspellbooks/api/config/DefaultConfig
+      19: dup
+      20: invokespecial #54                 // Method io/redspace/ironsspellbooks/api/config/DefaultConfig."<init>":()V
+      23: getstatic     #55                 // Field io/redspace/ironsspellbooks/api/spells/SpellRarity.LEGENDARY:Lio/redspace/ironsspellbooks/api/spells/SpellRarity;
+      26: invokevirtual #61                 // Method io/redspace/ironsspellbooks/api/config/DefaultConfig.setMinRarity:(Lio/redspace/ironsspellbooks/api/spells/SpellRarity;)Lio/redspace/ironsspellbooks/api/config/DefaultConfig;
+      29: getstatic     #65                 // Field io/redspace/ironsspellbooks/api/registry/SchoolRegistry.ELDRITCH_RESOURCE:Lnet/minecraft/resources/ResourceLocation;
+      32: invokevirtual #70                 // Method io/redspace/ironsspellbooks/api/config/DefaultConfig.setSchoolResource:(Lnet/minecraft/resources/ResourceLocation;)Lio/redspace/ironsspellbooks/api/config/DefaultConfig;
+      35: iconst_3
+      36: invokevirtual #74                 // Method io/redspace/ironsspellbooks/api/config/DefaultConfig.setMaxLevel:(I)Lio/redspace/ironsspellbooks/api/config/DefaultConfig;
+      39: ldc2_w        #78                 // double 200.0d
+      42: invokevirtual #80                 // Method io/redspace/ironsspellbooks/api/config/DefaultConfig.setCooldownSeconds:(D)Lio/redspace/ironsspellbooks/api/config/DefaultConfig;
+      45: invokevirtual #84                 // Method io/redspace/ironsspellbooks/api/config/DefaultConfig.build:()Lio/redspace/ironsspellbooks/api/config/DefaultConfig;
+      48: putfield      #88                 // Field defaultConfig:Lio/redspace/ironsspellbooks/api/config/DefaultConfig;
+      51: aload_0
+      52: bipush        20
+      54: putfield      #92                 // Field manaCostPerLevel:I
+      57: aload_0
+      58: bipush        6
+      60: putfield      #96                 // Field baseSpellPower:I
+      63: aload_0
+      64: bipush        6
+      66: putfield      #99                 // Field spellPowerPerLevel:I
+      69: aload_0
+      70: iconst_0
+      71: putfield      #102                // Field castTime:I
+      74: aload_0
+      75: sipush        300
+      78: putfield      #105                // Field baseManaCost:I
+      81: return
+
+  public io.redspace.ironsspellbooks.api.spells.CastType getCastType();
+    Code:
+       0: getstatic     #108                // Field io/redspace/ironsspellbooks/api/spells/CastType.INSTANT:Lio/redspace/ironsspellbooks/api/spells/CastType;
+       3: areturn
+
+  public io.redspace.ironsspellbooks.api.config.DefaultConfig getDefaultConfig();
+    Code:
+       0: aload_0
+       1: getfield      #88                 // Field defaultConfig:Lio/redspace/ironsspellbooks/api/config/DefaultConfig;
+       4: areturn
+
+  public net.minecraft.resources.ResourceLocation getSpellResource();
+    Code:
+       0: aload_0
+       1: getfield      #48                 // Field spellId:Lnet/minecraft/resources/ResourceLocation;
+       4: areturn
+
+  public java.util.Optional<net.minecraft.sounds.SoundEvent> getCastStartSound();
+    Code:
+       0: invokestatic  #114                // Method java/util/Optional.empty:()Ljava/util/Optional;
+       3: areturn
+
+  public java.util.Optional<net.minecraft.sounds.SoundEvent> getCastFinishSound();
+    Code:
+       0: getstatic     #120                // Field io/redspace/ironsspellbooks/registries/SoundRegistry.ABYSSAL_SHROUD:Lnet/neoforged/neoforge/registries/DeferredHolder;
+       3: invokevirtual #126                // Method net/neoforged/neoforge/registries/DeferredHolder.get:()Ljava/lang/Object;
+       6: checkcast     #132                // class net/minecraft/sounds/SoundEvent
+       9: invokestatic  #134                // Method java/util/Optional.of:(Ljava/lang/Object;)Ljava/util/Optional;
+      12: areturn
+
+  public void onCast(net.minecraft.world.level.Level, int, net.minecraft.world.entity.LivingEntity, io.redspace.ironsspellbooks.api.spells.CastSource, io.redspace.ironsspellbooks.api.magic.MagicData);
+    Code:
+       0: aload_3
+       1: new           #137                // class net/minecraft/world/effect/MobEffectInstance
+       4: dup
+       5: getstatic     #139                // Field io/redspace/ironsspellbooks/registries/MobEffectRegistry.ABYSSAL_SHROUD:Lnet/neoforged/neoforge/registries/DeferredHolder;
+       8: aload_0
+       9: iload_2
+      10: aload_3
+      11: invokevirtual #5                  // Method getSpellPower:(ILnet/minecraft/world/entity/Entity;)F
+      14: f2i
+      15: bipush        20
+      17: imul
+      18: iconst_0
+      19: iconst_0
+      20: iconst_0
+      21: iconst_1
+      22: invokespecial #142                // Method net/minecraft/world/effect/MobEffectInstance."<init>":(Lnet/minecraft/core/Holder;IIZZZ)V
+      25: invokevirtual #145                // Method net/minecraft/world/entity/LivingEntity.addEffect:(Lnet/minecraft/world/effect/MobEffectInstance;)Z
+      28: pop
+      29: aload_0
+      30: aload_1
+      31: iload_2
+      32: aload_3
+      33: aload         4
+      35: aload         5
+      37: invokespecial #151                // Method io/redspace/ironsspellbooks/api/spells/AbstractSpell.onCast:(Lnet/minecraft/world/level/Level;ILnet/minecraft/world/entity/LivingEntity;Lio/redspace/ironsspellbooks/api/spells/CastSource;Lio/redspace/ironsspellbooks/api/magic/MagicData;)V
+      40: return
+
+  public io.redspace.ironsspellbooks.api.util.AnimationHolder getCastStartAnimation();
+    Code:
+       0: getstatic     #155                // Field io/redspace/ironsspellbooks/api/spells/SpellAnimations.SELF_CAST_ANIMATION:Lio/redspace/ironsspellbooks/api/util/AnimationHolder;
+       3: areturn
+}

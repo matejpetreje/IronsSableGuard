@@ -1,0 +1,11 @@
+/build/
+/.gradle/
+/.idea/
+/out/
+/run/
+/logs/
+/crash-reports/
+
+*.log
+*.tmp
+*.cache

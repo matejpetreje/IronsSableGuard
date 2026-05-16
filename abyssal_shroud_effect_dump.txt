@@ -1,0 +1,333 @@
+Compiled from "AbyssalShroudEffect.java"
+public class io.redspace.ironsspellbooks.effect.AbyssalShroudEffect extends io.redspace.ironsspellbooks.effect.MagicMobEffect implements io.redspace.ironsspellbooks.effect.ISyncedMobEffect {
+  public io.redspace.ironsspellbooks.effect.AbyssalShroudEffect(net.minecraft.world.effect.MobEffectCategory, int);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: iload_2
+       3: invokespecial #1                  // Method io/redspace/ironsspellbooks/effect/MagicMobEffect."<init>":(Lnet/minecraft/world/effect/MobEffectCategory;I)V
+       6: return
+
+  public static boolean doEffect(net.minecraft.world.entity.LivingEntity, net.minecraft.world.damagesource.DamageSource);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field net/minecraft/world/entity/LivingEntity.level:Lnet/minecraft/world/level/Level;
+       4: getfield      #13                 // Field net/minecraft/world/level/Level.isClientSide:Z
+       7: ifne          40
+      10: aload_1
+      11: getstatic     #19                 // Field io/redspace/ironsspellbooks/datagen/DamageTypeTagGenerator.BYPASS_EVASION:Lnet/minecraft/tags/TagKey;
+      14: invokevirtual #25                 // Method net/minecraft/world/damagesource/DamageSource.is:(Lnet/minecraft/tags/TagKey;)Z
+      17: ifne          40
+      20: aload_1
+      21: getstatic     #31                 // Field net/minecraft/tags/DamageTypeTags.IS_FALL:Lnet/minecraft/tags/TagKey;
+      24: invokevirtual #25                 // Method net/minecraft/world/damagesource/DamageSource.is:(Lnet/minecraft/tags/TagKey;)Z
+      27: ifne          40
+      30: aload_1
+      31: getstatic     #36                 // Field net/minecraft/tags/DamageTypeTags.BYPASSES_INVULNERABILITY:Lnet/minecraft/tags/TagKey;
+      34: invokevirtual #25                 // Method net/minecraft/world/damagesource/DamageSource.is:(Lnet/minecraft/tags/TagKey;)Z
+      37: ifeq          42
+      40: iconst_0
+      41: ireturn
+      42: aload_0
+      43: invokevirtual #39                 // Method net/minecraft/world/entity/LivingEntity.getRandom:()Lnet/minecraft/util/RandomSource;
+      46: astore_2
+      47: aload_0
+      48: getfield      #7                  // Field net/minecraft/world/entity/LivingEntity.level:Lnet/minecraft/world/level/Level;
+      51: astore_3
+      52: new           #43                 // class net/minecraft/world/phys/Vec3
+      55: dup
+      56: aload_2
+      57: invokeinterface #45,  1           // InterfaceMethod net/minecraft/util/RandomSource.nextBoolean:()Z
+      62: ifeq          69
+      65: dconst_1
+      66: goto          72
+      69: ldc2_w        #51                 // double -1.0d
+      72: dconst_0
+      73: ldc2_w        #53                 // double -0.25d
+      76: invokespecial #55                 // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+      79: astore        4
+      81: aload         4
+      83: aload_0
+      84: invokevirtual #58                 // Method net/minecraft/world/entity/LivingEntity.getYRot:()F
+      87: invokevirtual #62                 // Method net/minecraft/world/phys/Vec3.yRot:(F)Lnet/minecraft/world/phys/Vec3;
+      90: pop
+      91: aload_0
+      92: invokestatic  #66                 // Method particleCloud:(Lnet/minecraft/world/entity/LivingEntity;)V
+      95: aload_0
+      96: invokevirtual #72                 // Method net/minecraft/world/entity/LivingEntity.position:()Lnet/minecraft/world/phys/Vec3;
+      99: aload         4
+     101: invokevirtual #76                 // Method net/minecraft/world/phys/Vec3.add:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;
+     104: astore        5
+     106: aload_3
+     107: aload         5
+     109: iconst_2
+     110: iconst_1
+     111: invokestatic  #80                 // Method io/redspace/ironsspellbooks/api/util/Utils.moveToRelativeGroundLevel:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;II)Lnet/minecraft/world/phys/Vec3;
+     114: astore        5
+     116: aload_0
+     117: aload_0
+     118: invokevirtual #86                 // Method net/minecraft/world/entity/LivingEntity.getPose:()Lnet/minecraft/world/entity/Pose;
+     121: invokevirtual #90                 // Method net/minecraft/world/entity/LivingEntity.getDimensions:(Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;
+     124: astore        6
+     126: aload         5
+     128: dconst_0
+     129: aload         6
+     131: invokevirtual #94                 // Method net/minecraft/world/entity/EntityDimensions.height:()F
+     134: f2d
+     135: ldc2_w        #99                 // double 2.0d
+     138: ddiv
+     139: dconst_0
+     140: invokevirtual #101                // Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;
+     143: astore        7
+     145: aload         7
+     147: aload         6
+     149: invokevirtual #104                // Method net/minecraft/world/entity/EntityDimensions.width:()F
+     152: ldc           #107                // float 0.2f
+     154: fadd
+     155: f2d
+     156: aload         6
+     158: invokevirtual #94                 // Method net/minecraft/world/entity/EntityDimensions.height:()F
+     161: ldc           #107                // float 0.2f
+     163: fadd
+     164: f2d
+     165: aload         6
+     167: invokevirtual #104                // Method net/minecraft/world/entity/EntityDimensions.width:()F
+     170: ldc           #107                // float 0.2f
+     172: fadd
+     173: f2d
+     174: invokestatic  #108                // Method net/minecraft/world/phys/AABB.ofSize:(Lnet/minecraft/world/phys/Vec3;DDD)Lnet/minecraft/world/phys/AABB;
+     177: invokestatic  #114                // Method net/minecraft/world/phys/shapes/Shapes.create:(Lnet/minecraft/world/phys/AABB;)Lnet/minecraft/world/phys/shapes/VoxelShape;
+     180: astore        8
+     182: aload_3
+     183: aconst_null
+     184: aload         8
+     186: aload         7
+     188: aload         6
+     190: invokevirtual #104                // Method net/minecraft/world/entity/EntityDimensions.width:()F
+     193: f2d
+     194: aload         6
+     196: invokevirtual #94                 // Method net/minecraft/world/entity/EntityDimensions.height:()F
+     199: f2d
+     200: aload         6
+     202: invokevirtual #104                // Method net/minecraft/world/entity/EntityDimensions.width:()F
+     205: f2d
+     206: invokevirtual #120                // Method net/minecraft/world/level/Level.findFreePosition:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/world/phys/Vec3;DDD)Ljava/util/Optional;
+     209: astore        9
+     211: aload         9
+     213: invokevirtual #124                // Method java/util/Optional.isPresent:()Z
+     216: ifeq          247
+     219: aload         9
+     221: invokevirtual #129                // Method java/util/Optional.get:()Ljava/lang/Object;
+     224: checkcast     #43                 // class net/minecraft/world/phys/Vec3
+     227: dconst_0
+     228: aload         6
+     230: invokevirtual #94                 // Method net/minecraft/world/entity/EntityDimensions.height:()F
+     233: fneg
+     234: fconst_2
+     235: fdiv
+     236: f2d
+     237: ldc2_w        #133                // double 1.0E-6d
+     240: dadd
+     241: dconst_0
+     242: invokevirtual #101                // Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;
+     245: astore        5
+     247: aload_3
+     248: aconst_null
+     249: aload         5
+     251: dconst_0
+     252: aload         6
+     254: invokevirtual #94                 // Method net/minecraft/world/entity/EntityDimensions.height:()F
+     257: fconst_2
+     258: fdiv
+     259: f2d
+     260: dconst_0
+     261: invokevirtual #101                // Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;
+     264: aload         6
+     266: invokevirtual #104                // Method net/minecraft/world/entity/EntityDimensions.width:()F
+     269: f2d
+     270: aload         6
+     272: invokevirtual #94                 // Method net/minecraft/world/entity/EntityDimensions.height:()F
+     275: f2d
+     276: aload         6
+     278: invokevirtual #104                // Method net/minecraft/world/entity/EntityDimensions.width:()F
+     281: f2d
+     282: invokestatic  #108                // Method net/minecraft/world/phys/AABB.ofSize:(Lnet/minecraft/world/phys/Vec3;DDD)Lnet/minecraft/world/phys/AABB;
+     285: invokevirtual #135                // Method net/minecraft/world/level/Level.collidesWithSuffocatingBlock:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;)Z
+     288: ifeq          297
+     291: aload_0
+     292: invokevirtual #72                 // Method net/minecraft/world/entity/LivingEntity.position:()Lnet/minecraft/world/phys/Vec3;
+     295: astore        5
+     297: aload_0
+     298: invokevirtual #139                // Method net/minecraft/world/entity/LivingEntity.isPassenger:()Z
+     301: ifeq          308
+     304: aload_0
+     305: invokevirtual #142                // Method net/minecraft/world/entity/LivingEntity.stopRiding:()V
+     308: aload_3
+     309: aload         5
+     311: invokestatic  #146                // Method net/minecraft/core/BlockPos.containing:(Lnet/minecraft/core/Position;)Lnet/minecraft/core/BlockPos;
+     314: invokevirtual #152                // Method net/minecraft/core/BlockPos.below:()Lnet/minecraft/core/BlockPos;
+     317: invokevirtual #156                // Method net/minecraft/world/level/Level.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+     320: invokevirtual #160                // Method net/minecraft/world/level/block/state/BlockState.isAir:()Z
+     323: ifne          349
+     326: aload_0
+     327: aload         5
+     329: getfield      #165                // Field net/minecraft/world/phys/Vec3.x:D
+     332: aload         5
+     334: getfield      #169                // Field net/minecraft/world/phys/Vec3.y:D
+     337: aload         5
+     339: getfield      #172                // Field net/minecraft/world/phys/Vec3.z:D
+     342: invokevirtual #175                // Method net/minecraft/world/entity/LivingEntity.teleportTo:(DDD)V
+     345: aload_0
+     346: invokestatic  #66                 // Method particleCloud:(Lnet/minecraft/world/entity/LivingEntity;)V
+     349: aload_1
+     350: invokevirtual #178                // Method net/minecraft/world/damagesource/DamageSource.getEntity:()Lnet/minecraft/world/entity/Entity;
+     353: ifnull        378
+     356: aload_0
+     357: getstatic     #182                // Field net/minecraft/commands/arguments/EntityAnchorArgument$Anchor.EYES:Lnet/minecraft/commands/arguments/EntityAnchorArgument$Anchor;
+     360: aload_1
+     361: invokevirtual #178                // Method net/minecraft/world/damagesource/DamageSource.getEntity:()Lnet/minecraft/world/entity/Entity;
+     364: invokevirtual #188                // Method net/minecraft/world/entity/Entity.getEyePosition:()Lnet/minecraft/world/phys/Vec3;
+     367: dconst_0
+     368: ldc2_w        #193                // double 0.15d
+     371: dconst_0
+     372: invokevirtual #195                // Method net/minecraft/world/phys/Vec3.subtract:(DDD)Lnet/minecraft/world/phys/Vec3;
+     375: invokevirtual #198                // Method net/minecraft/world/entity/LivingEntity.lookAt:(Lnet/minecraft/commands/arguments/EntityAnchorArgument$Anchor;Lnet/minecraft/world/phys/Vec3;)V
+     378: aload_3
+     379: aconst_null
+     380: aload_0
+     381: invokevirtual #202                // Method net/minecraft/world/entity/LivingEntity.getX:()D
+     384: aload_0
+     385: invokevirtual #206                // Method net/minecraft/world/entity/LivingEntity.getY:()D
+     388: aload_0
+     389: invokevirtual #209                // Method net/minecraft/world/entity/LivingEntity.getZ:()D
+     392: getstatic     #212                // Field io/redspace/ironsspellbooks/registries/SoundRegistry.ABYSSAL_TELEPORT:Lnet/neoforged/neoforge/registries/DeferredHolder;
+     395: invokevirtual #218                // Method net/neoforged/neoforge/registries/DeferredHolder.get:()Ljava/lang/Object;
+     398: checkcast     #221                // class net/minecraft/sounds/SoundEvent
+     401: getstatic     #223                // Field net/minecraft/sounds/SoundSource.AMBIENT:Lnet/minecraft/sounds/SoundSource;
+     404: fconst_1
+     405: ldc           #229                // float 0.9f
+     407: aload_2
+     408: invokeinterface #230,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F
+     413: ldc           #107                // float 0.2f
+     415: fmul
+     416: fadd
+     417: invokevirtual #233                // Method net/minecraft/world/level/Level.playSound:(Lnet/minecraft/world/entity/player/Player;DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FF)V
+     420: iconst_1
+     421: ireturn
+
+  private static void particleCloud(net.minecraft.world.entity.LivingEntity);
+    Code:
+       0: aload_0
+       1: invokevirtual #72                 // Method net/minecraft/world/entity/LivingEntity.position:()Lnet/minecraft/world/phys/Vec3;
+       4: dconst_0
+       5: aload_0
+       6: invokevirtual #237                // Method net/minecraft/world/entity/LivingEntity.getBbHeight:()F
+       9: fconst_2
+      10: fdiv
+      11: f2d
+      12: dconst_0
+      13: invokevirtual #101                // Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;
+      16: astore_1
+      17: aload_0
+      18: invokevirtual #240                // Method net/minecraft/world/entity/LivingEntity.level:()Lnet/minecraft/world/level/Level;
+      21: getstatic     #243                // Field net/minecraft/core/particles/ParticleTypes.SMOKE:Lnet/minecraft/core/particles/SimpleParticleType;
+      24: aload_1
+      25: getfield      #165                // Field net/minecraft/world/phys/Vec3.x:D
+      28: aload_1
+      29: getfield      #169                // Field net/minecraft/world/phys/Vec3.y:D
+      32: aload_1
+      33: getfield      #172                // Field net/minecraft/world/phys/Vec3.z:D
+      36: bipush        70
+      38: aload_0
+      39: invokevirtual #249                // Method net/minecraft/world/entity/LivingEntity.getBbWidth:()F
+      42: ldc           #252                // float 4.0f
+      44: fdiv
+      45: f2d
+      46: aload_0
+      47: invokevirtual #237                // Method net/minecraft/world/entity/LivingEntity.getBbHeight:()F
+      50: ldc           #253                // float 5.0f
+      52: fdiv
+      53: f2d
+      54: aload_0
+      55: invokevirtual #249                // Method net/minecraft/world/entity/LivingEntity.getBbWidth:()F
+      58: ldc           #252                // float 4.0f
+      60: fdiv
+      61: f2d
+      62: ldc2_w        #254                // double 0.035d
+      65: iconst_0
+      66: invokestatic  #256                // Method io/redspace/ironsspellbooks/capabilities/magic/MagicManager.spawnParticles:(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/particles/ParticleOptions;DDDIDDDDZ)V
+      69: return
+
+  public void clientTick(net.minecraft.world.entity.LivingEntity, net.minecraft.world.effect.MobEffectInstance);
+    Code:
+       0: aload_1
+       1: invokevirtual #262                // Method net/minecraft/world/entity/LivingEntity.getForward:()Lnet/minecraft/world/phys/Vec3;
+       4: ldc2_w        #265                // double 0.003d
+       7: invokevirtual #267                // Method net/minecraft/world/phys/Vec3.scale:(D)Lnet/minecraft/world/phys/Vec3;
+      10: invokevirtual #271                // Method net/minecraft/world/phys/Vec3.reverse:()Lnet/minecraft/world/phys/Vec3;
+      13: dconst_0
+      14: ldc2_w        #274                // double 0.02d
+      17: dconst_0
+      18: invokevirtual #101                // Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;
+      21: astore_3
+      22: aload_1
+      23: invokevirtual #39                 // Method net/minecraft/world/entity/LivingEntity.getRandom:()Lnet/minecraft/util/RandomSource;
+      26: astore        4
+      28: iconst_0
+      29: istore        5
+      31: iload         5
+      33: iconst_2
+      34: if_icmpge     145
+      37: new           #43                 // class net/minecraft/world/phys/Vec3
+      40: dup
+      41: aload         4
+      43: invokeinterface #230,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F
+      48: fconst_2
+      49: fmul
+      50: fconst_1
+      51: fsub
+      52: f2d
+      53: aload         4
+      55: invokeinterface #230,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F
+      60: fconst_2
+      61: fmul
+      62: fconst_1
+      63: fsub
+      64: f2d
+      65: aload         4
+      67: invokeinterface #230,  1          // InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F
+      72: fconst_2
+      73: fmul
+      74: fconst_1
+      75: fsub
+      76: f2d
+      77: invokespecial #55                 // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+      80: astore        6
+      82: aload         6
+      84: ldc2_w        #276                // double 0.03999999910593033d
+      87: invokevirtual #267                // Method net/minecraft/world/phys/Vec3.scale:(D)Lnet/minecraft/world/phys/Vec3;
+      90: aload_3
+      91: invokevirtual #76                 // Method net/minecraft/world/phys/Vec3.add:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;
+      94: astore        6
+      96: aload_1
+      97: getfield      #7                  // Field net/minecraft/world/entity/LivingEntity.level:Lnet/minecraft/world/level/Level;
+     100: getstatic     #243                // Field net/minecraft/core/particles/ParticleTypes.SMOKE:Lnet/minecraft/core/particles/SimpleParticleType;
+     103: aload_1
+     104: ldc2_w        #278                // double 0.4000000059604645d
+     107: invokevirtual #280                // Method net/minecraft/world/entity/LivingEntity.getRandomX:(D)D
+     110: aload_1
+     111: invokevirtual #284                // Method net/minecraft/world/entity/LivingEntity.getRandomY:()D
+     114: aload_1
+     115: ldc2_w        #278                // double 0.4000000059604645d
+     118: invokevirtual #287                // Method net/minecraft/world/entity/LivingEntity.getRandomZ:(D)D
+     121: aload         6
+     123: getfield      #165                // Field net/minecraft/world/phys/Vec3.x:D
+     126: aload         6
+     128: getfield      #169                // Field net/minecraft/world/phys/Vec3.y:D
+     131: aload         6
+     133: getfield      #172                // Field net/minecraft/world/phys/Vec3.z:D
+     136: invokevirtual #290                // Method net/minecraft/world/level/Level.addParticle:(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V
+     139: iinc          5, 1
+     142: goto          31
+     145: return
+}

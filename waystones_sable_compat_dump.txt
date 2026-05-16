@@ -1,0 +1,1217 @@
+Compiled from "SableWaystoneCompat.java"
+public final class com.sshakusora.waystonessable.compat.SableWaystoneCompat {
+  private static final java.util.Map<java.util.UUID, com.sshakusora.waystonessable.compat.SableWaystoneCompat$WarpPlateArrivalGuard> WARP_PLATE_ARRIVAL_GUARDS;
+
+  private static final java.util.Map<com.sshakusora.waystonessable.compat.SableWaystoneCompat$MovingBlockKey, java.lang.Boolean> MOVING_WAYSTONES;
+
+  private com.sshakusora.waystonessable.compat.SableWaystoneCompat();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static net.minecraft.world.phys.Vec3 projectToVisible(net.minecraft.world.level.Level, net.minecraft.world.phys.Vec3);
+    Code:
+       0: getstatic     #7                  // Field dev/ryanhcode/sable/Sable.HELPER:Ldev/ryanhcode/sable/ActiveSableCompanion;
+       3: aload_0
+       4: aload_1
+       5: invokevirtual #13                 // Method dev/ryanhcode/sable/ActiveSableCompanion.projectOutOfSubLevel:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;
+       8: areturn
+
+  public static double getWaystoneDistanceSqr(net.minecraft.world.entity.player.Player, net.blay09.mods.waystones.api.Waystone);
+    Code:
+       0: aload_1
+       1: invokeinterface #19,  1           // InterfaceMethod net/blay09/mods/waystones/api/Waystone.getDimension:()Lnet/minecraft/resources/ResourceKey;
+       6: aload_0
+       7: invokevirtual #25                 // Method net/minecraft/world/entity/player/Player.level:()Lnet/minecraft/world/level/Level;
+      10: invokevirtual #31                 // Method net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;
+      13: if_acmpeq     38
+      16: aload_1
+      17: invokeinterface #36,  1           // InterfaceMethod net/blay09/mods/waystones/api/Waystone.getPos:()Lnet/minecraft/core/BlockPos;
+      22: aload_0
+      23: invokevirtual #40                 // Method net/minecraft/world/entity/player/Player.getX:()D
+      26: aload_0
+      27: invokevirtual #44                 // Method net/minecraft/world/entity/player/Player.getY:()D
+      30: aload_0
+      31: invokevirtual #47                 // Method net/minecraft/world/entity/player/Player.getZ:()D
+      34: invokevirtual #50                 // Method net/minecraft/core/BlockPos.distToCenterSqr:(DDD)D
+      37: dreturn
+      38: aload_0
+      39: invokevirtual #25                 // Method net/minecraft/world/entity/player/Player.level:()Lnet/minecraft/world/level/Level;
+      42: aload_0
+      43: invokevirtual #56                 // Method net/minecraft/world/entity/player/Player.position:()Lnet/minecraft/world/phys/Vec3;
+      46: invokestatic  #60                 // Method projectToVisible:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;
+      49: astore_2
+      50: aload_0
+      51: invokevirtual #25                 // Method net/minecraft/world/entity/player/Player.level:()Lnet/minecraft/world/level/Level;
+      54: aload_1
+      55: invokeinterface #36,  1           // InterfaceMethod net/blay09/mods/waystones/api/Waystone.getPos:()Lnet/minecraft/core/BlockPos;
+      60: invokevirtual #65                 // Method net/minecraft/core/BlockPos.getCenter:()Lnet/minecraft/world/phys/Vec3;
+      63: invokestatic  #60                 // Method projectToVisible:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;
+      66: astore_3
+      67: aload_2
+      68: aload_3
+      69: invokevirtual #68                 // Method net/minecraft/world/phys/Vec3.distanceToSqr:(Lnet/minecraft/world/phys/Vec3;)D
+      72: dreturn
+
+  public static double getWaystoneDistance(net.minecraft.world.entity.player.Player, net.blay09.mods.waystones.api.Waystone);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokestatic  #74                 // Method getWaystoneDistanceSqr:(Lnet/minecraft/world/entity/player/Player;Lnet/blay09/mods/waystones/api/Waystone;)D
+       5: invokestatic  #78                 // Method java/lang/Math.sqrt:(D)D
+       8: dreturn
+
+  public static boolean isEntityInsideBlock(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.entity.Entity);
+    Code:
+       0: aload_2
+       1: invokevirtual #84                 // Method net/minecraft/world/entity/Entity.position:()Lnet/minecraft/world/phys/Vec3;
+       4: astore_3
+       5: getstatic     #7                  // Field dev/ryanhcode/sable/Sable.HELPER:Ldev/ryanhcode/sable/ActiveSableCompanion;
+       8: aload_0
+       9: aload_1
+      10: invokevirtual #87                 // Method dev/ryanhcode/sable/ActiveSableCompanion.getContaining:(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/Vec3i;)Ldev/ryanhcode/sable/sublevel/SubLevel;
+      13: astore        4
+      15: aload         4
+      17: ifnull        30
+      20: aload         4
+      22: invokevirtual #91                 // Method dev/ryanhcode/sable/sublevel/SubLevel.logicalPose:()Ldev/ryanhcode/sable/companion/math/Pose3d;
+      25: aload_3
+      26: invokevirtual #97                 // Method dev/ryanhcode/sable/companion/math/Pose3d.transformPositionInverse:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;
+      29: astore_3
+      30: aload_3
+      31: getfield      #103                // Field net/minecraft/world/phys/Vec3.x:D
+      34: aload_1
+      35: invokevirtual #107                // Method net/minecraft/core/BlockPos.getX:()I
+      38: i2d
+      39: dcmpl
+      40: iflt          118
+      43: aload_3
+      44: getfield      #103                // Field net/minecraft/world/phys/Vec3.x:D
+      47: aload_1
+      48: invokevirtual #107                // Method net/minecraft/core/BlockPos.getX:()I
+      51: iconst_1
+      52: iadd
+      53: i2d
+      54: dcmpg
+      55: ifge          118
+      58: aload_3
+      59: getfield      #110                // Field net/minecraft/world/phys/Vec3.y:D
+      62: aload_1
+      63: invokevirtual #113                // Method net/minecraft/core/BlockPos.getY:()I
+      66: i2d
+      67: dcmpl
+      68: iflt          118
+      71: aload_3
+      72: getfield      #110                // Field net/minecraft/world/phys/Vec3.y:D
+      75: aload_1
+      76: invokevirtual #113                // Method net/minecraft/core/BlockPos.getY:()I
+      79: iconst_1
+      80: iadd
+      81: i2d
+      82: dcmpg
+      83: ifge          118
+      86: aload_3
+      87: getfield      #115                // Field net/minecraft/world/phys/Vec3.z:D
+      90: aload_1
+      91: invokevirtual #118                // Method net/minecraft/core/BlockPos.getZ:()I
+      94: i2d
+      95: dcmpl
+      96: iflt          118
+      99: aload_3
+     100: getfield      #115                // Field net/minecraft/world/phys/Vec3.z:D
+     103: aload_1
+     104: invokevirtual #118                // Method net/minecraft/core/BlockPos.getZ:()I
+     107: iconst_1
+     108: iadd
+     109: i2d
+     110: dcmpg
+     111: ifge          118
+     114: iconst_1
+     115: goto          119
+     118: iconst_0
+     119: ireturn
+
+  public static java.util.List<net.minecraft.world.entity.Entity> getEntitiesInsideBlock(net.minecraft.world.level.Level, net.minecraft.core.BlockPos);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: getstatic     #120                // Field net/minecraft/world/entity/EntitySelector.ENTITY_STILL_ALIVE:Ljava/util/function/Predicate;
+       5: invokestatic  #126                // Method getEntitiesInsideBlock:(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Ljava/util/function/Predicate;)Ljava/util/List;
+       8: areturn
+
+  public static java.util.List<net.minecraft.world.entity.Entity> getEntitiesInsideBlock(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, java.util.function.Predicate<? super net.minecraft.world.entity.Entity>);
+    Code:
+       0: getstatic     #7                  // Field dev/ryanhcode/sable/Sable.HELPER:Ldev/ryanhcode/sable/ActiveSableCompanion;
+       3: aload_0
+       4: aload_1
+       5: invokevirtual #87                 // Method dev/ryanhcode/sable/ActiveSableCompanion.getContaining:(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/Vec3i;)Ldev/ryanhcode/sable/sublevel/SubLevel;
+       8: ifnonnull     71
+      11: new           #130                // class net/minecraft/world/phys/AABB
+      14: dup
+      15: aload_1
+      16: invokevirtual #107                // Method net/minecraft/core/BlockPos.getX:()I
+      19: i2d
+      20: aload_1
+      21: invokevirtual #113                // Method net/minecraft/core/BlockPos.getY:()I
+      24: i2d
+      25: aload_1
+      26: invokevirtual #118                // Method net/minecraft/core/BlockPos.getZ:()I
+      29: i2d
+      30: aload_1
+      31: invokevirtual #107                // Method net/minecraft/core/BlockPos.getX:()I
+      34: iconst_1
+      35: iadd
+      36: i2d
+      37: aload_1
+      38: invokevirtual #113                // Method net/minecraft/core/BlockPos.getY:()I
+      41: iconst_1
+      42: iadd
+      43: i2d
+      44: aload_1
+      45: invokevirtual #118                // Method net/minecraft/core/BlockPos.getZ:()I
+      48: iconst_1
+      49: iadd
+      50: i2d
+      51: invokespecial #132                // Method net/minecraft/world/phys/AABB."<init>":(DDDDDD)V
+      54: astore_3
+      55: aload_0
+      56: aconst_null
+      57: checkcast     #85                 // class net/minecraft/world/entity/Entity
+      60: aload_3
+      61: aload_2
+      62: invokedynamic #135,  0            // InvokeDynamic #0:test:(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;
+      67: invokevirtual #139                // Method net/minecraft/world/level/Level.getEntities:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;
+      70: areturn
+      71: aload_0
+      72: aload_1
+      73: invokevirtual #65                 // Method net/minecraft/core/BlockPos.getCenter:()Lnet/minecraft/world/phys/Vec3;
+      76: invokestatic  #60                 // Method projectToVisible:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;
+      79: astore_3
+      80: new           #130                // class net/minecraft/world/phys/AABB
+      83: dup
+      84: aload_3
+      85: aload_3
+      86: invokespecial #143                // Method net/minecraft/world/phys/AABB."<init>":(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)V
+      89: ldc2_w        #146                // double 2.0d
+      92: invokevirtual #148                // Method net/minecraft/world/phys/AABB.inflate:(D)Lnet/minecraft/world/phys/AABB;
+      95: astore        4
+      97: aload_0
+      98: aconst_null
+      99: checkcast     #85                 // class net/minecraft/world/entity/Entity
+     102: aload         4
+     104: aload_2
+     105: aload_0
+     106: aload_1
+     107: invokedynamic #152,  0            // InvokeDynamic #1:test:(Ljava/util/function/Predicate;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Ljava/util/function/Predicate;
+     112: invokevirtual #139                // Method net/minecraft/world/level/Level.getEntities:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;
+     115: areturn
+
+  public static void registerWarpPlateArrivalGuard(net.minecraft.world.entity.Entity, net.minecraft.world.level.Level, net.minecraft.core.BlockPos);
+    Code:
+       0: getstatic     #155                // Field WARP_PLATE_ARRIVAL_GUARDS:Ljava/util/Map;
+       3: aload_0
+       4: invokevirtual #159                // Method net/minecraft/world/entity/Entity.getUUID:()Ljava/util/UUID;
+       7: new           #163                // class com/sshakusora/waystonessable/compat/SableWaystoneCompat$WarpPlateArrivalGuard
+      10: dup
+      11: aload_1
+      12: invokevirtual #31                 // Method net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;
+      15: aload_2
+      16: invokevirtual #165                // Method net/minecraft/core/BlockPos.immutable:()Lnet/minecraft/core/BlockPos;
+      19: invokespecial #168                // Method com/sshakusora/waystonessable/compat/SableWaystoneCompat$WarpPlateArrivalGuard."<init>":(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/core/BlockPos;)V
+      22: invokeinterface #171,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      27: pop
+      28: return
+
+  public static void markMovingWaystone(net.minecraft.world.level.Level, net.minecraft.core.BlockPos);
+    Code:
+       0: getstatic     #177                // Field MOVING_WAYSTONES:Ljava/util/Map;
+       3: new           #180                // class com/sshakusora/waystonessable/compat/SableWaystoneCompat$MovingBlockKey
+       6: dup
+       7: aload_0
+       8: invokevirtual #31                 // Method net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;
+      11: aload_1
+      12: invokevirtual #165                // Method net/minecraft/core/BlockPos.immutable:()Lnet/minecraft/core/BlockPos;
+      15: invokespecial #182                // Method com/sshakusora/waystonessable/compat/SableWaystoneCompat$MovingBlockKey."<init>":(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/core/BlockPos;)V
+      18: getstatic     #183                // Field java/lang/Boolean.TRUE:Ljava/lang/Boolean;
+      21: invokeinterface #171,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      26: pop
+      27: return
+
+  public static boolean consumeMovingWaystone(net.minecraft.world.level.Level, net.minecraft.core.BlockPos);
+    Code:
+       0: getstatic     #177                // Field MOVING_WAYSTONES:Ljava/util/Map;
+       3: new           #180                // class com/sshakusora/waystonessable/compat/SableWaystoneCompat$MovingBlockKey
+       6: dup
+       7: aload_0
+       8: invokevirtual #31                 // Method net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;
+      11: aload_1
+      12: invokevirtual #165                // Method net/minecraft/core/BlockPos.immutable:()Lnet/minecraft/core/BlockPos;
+      15: invokespecial #182                // Method com/sshakusora/waystonessable/compat/SableWaystoneCompat$MovingBlockKey."<init>":(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/core/BlockPos;)V
+      18: invokeinterface #189,  2          // InterfaceMethod java/util/Map.remove:(Ljava/lang/Object;)Ljava/lang/Object;
+      23: ifnull        30
+      26: iconst_1
+      27: goto          31
+      30: iconst_0
+      31: ireturn
+
+  public static boolean consumeWarpPlateArrivalGuard(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.entity.Entity);
+    Code:
+       0: getstatic     #155                // Field WARP_PLATE_ARRIVAL_GUARDS:Ljava/util/Map;
+       3: aload_2
+       4: invokevirtual #159                // Method net/minecraft/world/entity/Entity.getUUID:()Ljava/util/UUID;
+       7: invokeinterface #193,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      12: checkcast     #163                // class com/sshakusora/waystonessable/compat/SableWaystoneCompat$WarpPlateArrivalGuard
+      15: astore_3
+      16: aload_3
+      17: ifnonnull     22
+      20: iconst_0
+      21: ireturn
+      22: aload_3
+      23: getfield      #196                // Field com/sshakusora/waystonessable/compat/SableWaystoneCompat$WarpPlateArrivalGuard.dimension:Lnet/minecraft/resources/ResourceKey;
+      26: aload_0
+      27: invokevirtual #31                 // Method net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;
+      30: if_acmpne     44
+      33: aload_3
+      34: getfield      #199                // Field com/sshakusora/waystonessable/compat/SableWaystoneCompat$WarpPlateArrivalGuard.blockPos:Lnet/minecraft/core/BlockPos;
+      37: aload_1
+      38: invokevirtual #203                // Method net/minecraft/core/BlockPos.equals:(Ljava/lang/Object;)Z
+      41: ifne          46
+      44: iconst_0
+      45: ireturn
+      46: aload_0
+      47: aload_1
+      48: aload_2
+      49: invokestatic  #207                // Method isEntityInsideBlock:(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Entity;)Z
+      52: ifne          57
+      55: iconst_0
+      56: ireturn
+      57: getstatic     #155                // Field WARP_PLATE_ARRIVAL_GUARDS:Ljava/util/Map;
+      60: aload_2
+      61: invokevirtual #159                // Method net/minecraft/world/entity/Entity.getUUID:()Ljava/util/UUID;
+      64: aload_3
+      65: invokeinterface #211,  3          // InterfaceMethod java/util/Map.remove:(Ljava/lang/Object;Ljava/lang/Object;)Z
+      70: pop
+      71: iconst_1
+      72: ireturn
+
+  public static boolean hasWarpPlateArrivalGuard(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.entity.Entity);
+    Code:
+       0: getstatic     #155                // Field WARP_PLATE_ARRIVAL_GUARDS:Ljava/util/Map;
+       3: aload_2
+       4: invokevirtual #159                // Method net/minecraft/world/entity/Entity.getUUID:()Ljava/util/UUID;
+       7: invokeinterface #193,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      12: checkcast     #163                // class com/sshakusora/waystonessable/compat/SableWaystoneCompat$WarpPlateArrivalGuard
+      15: astore_3
+      16: aload_3
+      17: ifnull        46
+      20: aload_3
+      21: getfield      #196                // Field com/sshakusora/waystonessable/compat/SableWaystoneCompat$WarpPlateArrivalGuard.dimension:Lnet/minecraft/resources/ResourceKey;
+      24: aload_0
+      25: invokevirtual #31                 // Method net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;
+      28: if_acmpne     46
+      31: aload_3
+      32: getfield      #199                // Field com/sshakusora/waystonessable/compat/SableWaystoneCompat$WarpPlateArrivalGuard.blockPos:Lnet/minecraft/core/BlockPos;
+      35: aload_1
+      36: invokevirtual #203                // Method net/minecraft/core/BlockPos.equals:(Ljava/lang/Object;)Z
+      39: ifeq          46
+      42: iconst_1
+      43: goto          47
+      46: iconst_0
+      47: ireturn
+
+  public static void clearWarpPlateArrivalGuardIfNeeded(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.entity.Entity);
+    Code:
+       0: getstatic     #155                // Field WARP_PLATE_ARRIVAL_GUARDS:Ljava/util/Map;
+       3: aload_2
+       4: invokevirtual #159                // Method net/minecraft/world/entity/Entity.getUUID:()Ljava/util/UUID;
+       7: invokeinterface #193,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      12: checkcast     #163                // class com/sshakusora/waystonessable/compat/SableWaystoneCompat$WarpPlateArrivalGuard
+      15: astore_3
+      16: aload_3
+      17: ifnonnull     21
+      20: return
+      21: aload_3
+      22: getfield      #196                // Field com/sshakusora/waystonessable/compat/SableWaystoneCompat$WarpPlateArrivalGuard.dimension:Lnet/minecraft/resources/ResourceKey;
+      25: aload_0
+      26: invokevirtual #31                 // Method net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;
+      29: if_acmpne     43
+      32: aload_3
+      33: getfield      #199                // Field com/sshakusora/waystonessable/compat/SableWaystoneCompat$WarpPlateArrivalGuard.blockPos:Lnet/minecraft/core/BlockPos;
+      36: aload_1
+      37: invokevirtual #203                // Method net/minecraft/core/BlockPos.equals:(Ljava/lang/Object;)Z
+      40: ifne          44
+      43: return
+      44: aload_0
+      45: aload_1
+      46: aload_2
+      47: invokestatic  #207                // Method isEntityInsideBlock:(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Entity;)Z
+      50: ifne          67
+      53: getstatic     #155                // Field WARP_PLATE_ARRIVAL_GUARDS:Ljava/util/Map;
+      56: aload_2
+      57: invokevirtual #159                // Method net/minecraft/world/entity/Entity.getUUID:()Ljava/util/UUID;
+      60: aload_3
+      61: invokeinterface #211,  3          // InterfaceMethod java/util/Map.remove:(Ljava/lang/Object;Ljava/lang/Object;)Z
+      66: pop
+      67: return
+
+  public static net.minecraft.world.phys.Vec3 getVisibleTeleportPos(net.minecraft.world.level.Level, net.minecraft.world.phys.Vec3);
+    Code:
+       0: getstatic     #7                  // Field dev/ryanhcode/sable/Sable.HELPER:Ldev/ryanhcode/sable/ActiveSableCompanion;
+       3: aload_0
+       4: aload_1
+       5: invokevirtual #214                // Method dev/ryanhcode/sable/ActiveSableCompanion.getContaining:(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/Position;)Ldev/ryanhcode/sable/sublevel/SubLevel;
+       8: astore_2
+       9: aload_2
+      10: ifnonnull     55
+      13: aload_0
+      14: instanceof    #217                // class net/minecraft/server/level/ServerLevel
+      17: ifeq          38
+      20: aload_0
+      21: checkcast     #217                // class net/minecraft/server/level/ServerLevel
+      24: astore        4
+      26: aload         4
+      28: aload_1
+      29: invokestatic  #219                // Method net/minecraft/core/BlockPos.containing:(Lnet/minecraft/core/Position;)Lnet/minecraft/core/BlockPos;
+      32: invokestatic  #223                // Method findStoredSubLevelData:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Ldev/ryanhcode/sable/sublevel/storage/serialization/SubLevelData;
+      35: goto          39
+      38: aconst_null
+      39: astore_3
+      40: aload_3
+      41: ifnonnull     46
+      44: aload_1
+      45: areturn
+      46: aload_3
+      47: aload_1
+      48: invokestatic  #227                // Method getFeetStoragePos:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;
+      51: invokestatic  #230                // Method transformStoredTargetPos:(Ldev/ryanhcode/sable/sublevel/storage/serialization/SubLevelData;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;
+      54: areturn
+      55: aload_2
+      56: invokevirtual #91                 // Method dev/ryanhcode/sable/sublevel/SubLevel.logicalPose:()Ldev/ryanhcode/sable/companion/math/Pose3d;
+      59: aload_1
+      60: invokestatic  #227                // Method getFeetStoragePos:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;
+      63: invokevirtual #234                // Method dev/ryanhcode/sable/companion/math/Pose3d.transformPosition:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;
+      66: areturn
+
+  public static net.minecraft.world.phys.Vec3 getFeetStoragePos(net.minecraft.world.phys.Vec3);
+    Code:
+       0: new           #69                 // class net/minecraft/world/phys/Vec3
+       3: dup
+       4: aload_0
+       5: getfield      #103                // Field net/minecraft/world/phys/Vec3.x:D
+       8: aload_0
+       9: getfield      #110                // Field net/minecraft/world/phys/Vec3.y:D
+      12: ldc2_w        #237                // double 0.5d
+      15: dsub
+      16: aload_0
+      17: getfield      #115                // Field net/minecraft/world/phys/Vec3.z:D
+      20: invokespecial #239                // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+      23: areturn
+
+  public static boolean isWaystoneValidInLevel(net.minecraft.server.level.ServerLevel, net.blay09.mods.waystones.api.Waystone);
+    Code:
+       0: aload_1
+       1: invokeinterface #36,  1           // InterfaceMethod net/blay09/mods/waystones/api/Waystone.getPos:()Lnet/minecraft/core/BlockPos;
+       6: astore_2
+       7: aload_0
+       8: aload_2
+       9: invokevirtual #242                // Method net/minecraft/server/level/ServerLevel.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+      12: getstatic     #246                // Field net/blay09/mods/waystones/tag/ModBlockTags.IS_TELEPORT_TARGET:Lnet/minecraft/tags/TagKey;
+      15: invokevirtual #252                // Method net/minecraft/world/level/block/state/BlockState.is:(Lnet/minecraft/tags/TagKey;)Z
+      18: ifeq          23
+      21: iconst_1
+      22: ireturn
+      23: aload_0
+      24: invokestatic  #258                // Method dev/ryanhcode/sable/api/sublevel/SubLevelContainer.getContainer:(Lnet/minecraft/server/level/ServerLevel;)Ldev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer;
+      27: astore_3
+      28: aload_3
+      29: ifnonnull     34
+      32: iconst_0
+      33: ireturn
+      34: aload_3
+      35: aload_2
+      36: invokevirtual #107                // Method net/minecraft/core/BlockPos.getX:()I
+      39: iconst_4
+      40: ishr
+      41: aload_2
+      42: invokevirtual #118                // Method net/minecraft/core/BlockPos.getZ:()I
+      45: iconst_4
+      46: ishr
+      47: invokevirtual #264                // Method dev/ryanhcode/sable/api/sublevel/SubLevelContainer.getPlot:(II)Ldev/ryanhcode/sable/sublevel/plot/LevelPlot;
+      50: ifnull        55
+      53: iconst_1
+      54: ireturn
+      55: aload_0
+      56: aload_2
+      57: invokestatic  #223                // Method findStoredSubLevelData:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Ldev/ryanhcode/sable/sublevel/storage/serialization/SubLevelData;
+      60: ifnull        67
+      63: iconst_1
+      64: goto          68
+      67: iconst_0
+      68: ireturn
+
+  public static boolean isWaystoneOnSubLevel(net.minecraft.server.MinecraftServer, net.blay09.mods.waystones.api.Waystone);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokeinterface #19,  1           // InterfaceMethod net/blay09/mods/waystones/api/Waystone.getDimension:()Lnet/minecraft/resources/ResourceKey;
+       7: invokevirtual #268                // Method net/minecraft/server/MinecraftServer.getLevel:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/server/level/ServerLevel;
+      10: astore_2
+      11: aload_2
+      12: ifnonnull     17
+      15: iconst_0
+      16: ireturn
+      17: aload_2
+      18: aload_1
+      19: invokeinterface #36,  1           // InterfaceMethod net/blay09/mods/waystones/api/Waystone.getPos:()Lnet/minecraft/core/BlockPos;
+      24: invokestatic  #274                // Method isWaystoneOnSubLevel:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Z
+      27: ireturn
+
+  public static boolean isWaystoneOnSubLevel(net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos);
+    Code:
+       0: getstatic     #7                  // Field dev/ryanhcode/sable/Sable.HELPER:Ldev/ryanhcode/sable/ActiveSableCompanion;
+       3: aload_0
+       4: aload_1
+       5: invokevirtual #87                 // Method dev/ryanhcode/sable/ActiveSableCompanion.getContaining:(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/Vec3i;)Ldev/ryanhcode/sable/sublevel/SubLevel;
+       8: ifnull        13
+      11: iconst_1
+      12: ireturn
+      13: aload_0
+      14: invokestatic  #278                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.getContainer:(Lnet/minecraft/server/level/ServerLevel;)Ldev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer;
+      17: astore_2
+      18: aload_2
+      19: ifnull        43
+      22: aload_2
+      23: aload_1
+      24: invokevirtual #107                // Method net/minecraft/core/BlockPos.getX:()I
+      27: iconst_4
+      28: ishr
+      29: aload_1
+      30: invokevirtual #118                // Method net/minecraft/core/BlockPos.getZ:()I
+      33: iconst_4
+      34: ishr
+      35: invokevirtual #281                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.getPlot:(II)Ldev/ryanhcode/sable/sublevel/plot/LevelPlot;
+      38: ifnull        43
+      41: iconst_1
+      42: ireturn
+      43: aload_0
+      44: aload_1
+      45: invokestatic  #223                // Method findStoredSubLevelData:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Ldev/ryanhcode/sable/sublevel/storage/serialization/SubLevelData;
+      48: ifnull        55
+      51: iconst_1
+      52: goto          56
+      55: iconst_0
+      56: ireturn
+
+  public static long getPlotCoordinate(dev.ryanhcode.sable.sublevel.SubLevel);
+    Code:
+       0: aload_0
+       1: invokevirtual #282                // Method dev/ryanhcode/sable/sublevel/SubLevel.getLevel:()Lnet/minecraft/world/level/Level;
+       4: invokestatic  #284                // Method dev/ryanhcode/sable/api/sublevel/SubLevelContainer.getContainer:(Lnet/minecraft/world/level/Level;)Ldev/ryanhcode/sable/api/sublevel/SubLevelContainer;
+       7: astore_1
+       8: aload_1
+       9: ifnonnull     16
+      12: ldc2_w        #289                // long -9223372036854775808l
+      15: lreturn
+      16: aload_0
+      17: invokevirtual #291                // Method dev/ryanhcode/sable/sublevel/SubLevel.getPlot:()Ldev/ryanhcode/sable/sublevel/plot/LevelPlot;
+      20: getfield      #294                // Field dev/ryanhcode/sable/sublevel/plot/LevelPlot.plotPos:Lnet/minecraft/world/level/ChunkPos;
+      23: astore_2
+      24: aload_2
+      25: getfield      #300                // Field net/minecraft/world/level/ChunkPos.x:I
+      28: aload_1
+      29: invokevirtual #305                // Method dev/ryanhcode/sable/api/sublevel/SubLevelContainer.getOrigin:()Lorg/joml/Vector2i;
+      32: getfield      #309                // Field org/joml/Vector2i.x:I
+      35: isub
+      36: istore_3
+      37: aload_2
+      38: getfield      #312                // Field net/minecraft/world/level/ChunkPos.z:I
+      41: aload_1
+      42: invokevirtual #305                // Method dev/ryanhcode/sable/api/sublevel/SubLevelContainer.getOrigin:()Lorg/joml/Vector2i;
+      45: getfield      #314                // Field org/joml/Vector2i.y:I
+      48: isub
+      49: istore        4
+      51: iload_3
+      52: iload         4
+      54: invokestatic  #316                // Method net/minecraft/world/level/ChunkPos.asLong:(II)J
+      57: lreturn
+
+  public static void prepareCrossDimensionTeleport(net.minecraft.world.entity.Entity, net.minecraft.world.level.Level, net.minecraft.world.phys.Vec3);
+    Code:
+       0: aload_0
+       1: instanceof    #320                // class net/minecraft/server/level/ServerPlayer
+       4: ifeq          15
+       7: aload_0
+       8: checkcast     #320                // class net/minecraft/server/level/ServerPlayer
+      11: astore_3
+      12: goto          16
+      15: return
+      16: aload_1
+      17: instanceof    #217                // class net/minecraft/server/level/ServerLevel
+      20: ifeq          32
+      23: aload_1
+      24: checkcast     #217                // class net/minecraft/server/level/ServerLevel
+      27: astore        4
+      29: goto          33
+      32: return
+      33: aload         4
+      35: aload_2
+      36: invokestatic  #219                // Method net/minecraft/core/BlockPos.containing:(Lnet/minecraft/core/Position;)Lnet/minecraft/core/BlockPos;
+      39: invokestatic  #322                // Method getPlotCoordinate:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)J
+      42: lstore        5
+      44: lload         5
+      46: ldc2_w        #289                // long -9223372036854775808l
+      49: lcmp
+      50: ifeq          76
+      53: aload_3
+      54: getfield      #326                // Field net/minecraft/server/level/ServerPlayer.connection:Lnet/minecraft/server/network/ServerGamePacketListenerImpl;
+      57: new           #330                // class net/minecraft/network/protocol/common/ClientboundCustomPayloadPacket
+      60: dup
+      61: new           #332                // class com/sshakusora/waystonessable/network/SubLevelGuardPayload
+      64: dup
+      65: lload         5
+      67: invokespecial #334                // Method com/sshakusora/waystonessable/network/SubLevelGuardPayload."<init>":(J)V
+      70: invokespecial #337                // Method net/minecraft/network/protocol/common/ClientboundCustomPayloadPacket."<init>":(Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload;)V
+      73: invokevirtual #340                // Method net/minecraft/server/network/ServerGamePacketListenerImpl.send:(Lnet/minecraft/network/protocol/Packet;)V
+      76: return
+
+  public static void syncTrackingAfterTeleport(net.minecraft.world.entity.Entity, net.minecraft.world.phys.Vec3, boolean);
+    Code:
+       0: aload_0
+       1: checkcast     #346                // class dev/ryanhcode/sable/mixinterface/entity/entity_sublevel_collision/EntityMovementExtension
+       4: astore_3
+       5: getstatic     #7                  // Field dev/ryanhcode/sable/Sable.HELPER:Ldev/ryanhcode/sable/ActiveSableCompanion;
+       8: aload_0
+       9: invokevirtual #348                // Method net/minecraft/world/entity/Entity.level:()Lnet/minecraft/world/level/Level;
+      12: aload_1
+      13: invokevirtual #214                // Method dev/ryanhcode/sable/ActiveSableCompanion.getContaining:(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/Position;)Ldev/ryanhcode/sable/sublevel/SubLevel;
+      16: astore        4
+      18: aload         4
+      20: ifnonnull     56
+      23: aload_0
+      24: invokevirtual #348                // Method net/minecraft/world/entity/Entity.level:()Lnet/minecraft/world/level/Level;
+      27: astore        7
+      29: aload         7
+      31: instanceof    #217                // class net/minecraft/server/level/ServerLevel
+      34: ifeq          56
+      37: aload         7
+      39: checkcast     #217                // class net/minecraft/server/level/ServerLevel
+      42: astore        6
+      44: aload         6
+      46: aload_1
+      47: invokestatic  #219                // Method net/minecraft/core/BlockPos.containing:(Lnet/minecraft/core/Position;)Lnet/minecraft/core/BlockPos;
+      50: invokestatic  #223                // Method findStoredSubLevelData:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Ldev/ryanhcode/sable/sublevel/storage/serialization/SubLevelData;
+      53: goto          57
+      56: aconst_null
+      57: astore        5
+      59: aload         4
+      61: ifnonnull     69
+      64: aload         5
+      66: ifnull        73
+      69: iconst_1
+      70: goto          74
+      73: iconst_0
+      74: istore        6
+      76: aload_3
+      77: aload         4
+      79: invokeinterface #349,  2          // InterfaceMethod dev/ryanhcode/sable/mixinterface/entity/entity_sublevel_collision/EntityMovementExtension.sable$setTrackingSubLevel:(Ldev/ryanhcode/sable/sublevel/SubLevel;)V
+      84: iload         6
+      86: ifeq          93
+      89: aload_0
+      90: invokestatic  #353                // Method resetEntityMotion:(Lnet/minecraft/world/entity/Entity;)V
+      93: aload_0
+      94: instanceof    #320                // class net/minecraft/server/level/ServerPlayer
+      97: ifeq          359
+     100: aload_0
+     101: checkcast     #320                // class net/minecraft/server/level/ServerPlayer
+     104: astore        7
+     106: iload         6
+     108: ifeq          305
+     111: aload_1
+     112: invokestatic  #227                // Method getFeetStoragePos:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;
+     115: astore        8
+     117: new           #357                // class org/joml/Vector3d
+     120: dup
+     121: aload         8
+     123: getfield      #103                // Field net/minecraft/world/phys/Vec3.x:D
+     126: aload         8
+     128: getfield      #110                // Field net/minecraft/world/phys/Vec3.y:D
+     131: aload         8
+     133: getfield      #115                // Field net/minecraft/world/phys/Vec3.z:D
+     136: invokespecial #359                // Method org/joml/Vector3d."<init>":(DDD)V
+     139: astore        9
+     141: aload         4
+     143: ifnull        195
+     146: aload         7
+     148: checkcast     #360                // class dev/ryanhcode/sable/mixinterface/player_freezing/PlayerFreezeExtension
+     151: aload         4
+     153: invokevirtual #362                // Method dev/ryanhcode/sable/sublevel/SubLevel.getUniqueId:()Ljava/util/UUID;
+     156: aload         9
+     158: invokeinterface #365,  3          // InterfaceMethod dev/ryanhcode/sable/mixinterface/player_freezing/PlayerFreezeExtension.sable$freezeTo:(Ljava/util/UUID;Lorg/joml/Vector3dc;)V
+     163: aload         7
+     165: getfield      #326                // Field net/minecraft/server/level/ServerPlayer.connection:Lnet/minecraft/server/network/ServerGamePacketListenerImpl;
+     168: new           #330                // class net/minecraft/network/protocol/common/ClientboundCustomPayloadPacket
+     171: dup
+     172: new           #369                // class dev/ryanhcode/sable/network/packets/tcp/ClientboundFreezePlayerPacket
+     175: dup
+     176: aload         4
+     178: invokevirtual #362                // Method dev/ryanhcode/sable/sublevel/SubLevel.getUniqueId:()Ljava/util/UUID;
+     181: aload         9
+     183: invokespecial #371                // Method dev/ryanhcode/sable/network/packets/tcp/ClientboundFreezePlayerPacket."<init>":(Ljava/util/UUID;Lorg/joml/Vector3dc;)V
+     186: invokespecial #337                // Method net/minecraft/network/protocol/common/ClientboundCustomPayloadPacket."<init>":(Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload;)V
+     189: invokevirtual #340                // Method net/minecraft/server/network/ServerGamePacketListenerImpl.send:(Lnet/minecraft/network/protocol/Packet;)V
+     192: goto          241
+     195: aload         7
+     197: checkcast     #360                // class dev/ryanhcode/sable/mixinterface/player_freezing/PlayerFreezeExtension
+     200: aload         5
+     202: invokevirtual #373                // Method dev/ryanhcode/sable/sublevel/storage/serialization/SubLevelData.uuid:()Ljava/util/UUID;
+     205: aload         9
+     207: invokeinterface #365,  3          // InterfaceMethod dev/ryanhcode/sable/mixinterface/player_freezing/PlayerFreezeExtension.sable$freezeTo:(Ljava/util/UUID;Lorg/joml/Vector3dc;)V
+     212: aload         7
+     214: getfield      #326                // Field net/minecraft/server/level/ServerPlayer.connection:Lnet/minecraft/server/network/ServerGamePacketListenerImpl;
+     217: new           #330                // class net/minecraft/network/protocol/common/ClientboundCustomPayloadPacket
+     220: dup
+     221: new           #369                // class dev/ryanhcode/sable/network/packets/tcp/ClientboundFreezePlayerPacket
+     224: dup
+     225: aload         5
+     227: invokevirtual #373                // Method dev/ryanhcode/sable/sublevel/storage/serialization/SubLevelData.uuid:()Ljava/util/UUID;
+     230: aload         9
+     232: invokespecial #371                // Method dev/ryanhcode/sable/network/packets/tcp/ClientboundFreezePlayerPacket."<init>":(Ljava/util/UUID;Lorg/joml/Vector3dc;)V
+     235: invokespecial #337                // Method net/minecraft/network/protocol/common/ClientboundCustomPayloadPacket."<init>":(Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload;)V
+     238: invokevirtual #340                // Method net/minecraft/server/network/ServerGamePacketListenerImpl.send:(Lnet/minecraft/network/protocol/Packet;)V
+     241: new           #378                // class com/sshakusora/waystonessable/network/SableTeleportPayload
+     244: dup
+     245: aload         4
+     247: invokestatic  #380                // Method java/util/Optional.ofNullable:(Ljava/lang/Object;)Ljava/util/Optional;
+     250: invokedynamic #386,  0            // InvokeDynamic #2:apply:()Ljava/util/function/Function;
+     255: invokevirtual #390                // Method java/util/Optional.map:(Ljava/util/function/Function;)Ljava/util/Optional;
+     258: aload         7
+     260: invokevirtual #394                // Method net/minecraft/server/level/ServerPlayer.getX:()D
+     263: aload         7
+     265: invokevirtual #395                // Method net/minecraft/server/level/ServerPlayer.getY:()D
+     268: aload         7
+     270: invokevirtual #396                // Method net/minecraft/server/level/ServerPlayer.getZ:()D
+     273: invokespecial #397                // Method com/sshakusora/waystonessable/network/SableTeleportPayload."<init>":(Ljava/util/Optional;DDD)V
+     276: astore        10
+     278: aload         7
+     280: getfield      #326                // Field net/minecraft/server/level/ServerPlayer.connection:Lnet/minecraft/server/network/ServerGamePacketListenerImpl;
+     283: new           #330                // class net/minecraft/network/protocol/common/ClientboundCustomPayloadPacket
+     286: dup
+     287: aload         10
+     289: invokespecial #337                // Method net/minecraft/network/protocol/common/ClientboundCustomPayloadPacket."<init>":(Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload;)V
+     292: invokevirtual #340                // Method net/minecraft/server/network/ServerGamePacketListenerImpl.send:(Lnet/minecraft/network/protocol/Packet;)V
+     295: iload_2
+     296: ifne          304
+     299: aload         7
+     301: invokestatic  #400                // Method dev/ryanhcode/sable/api/entity/EntitySubLevelUtil.setOldPosNoMovement:(Lnet/minecraft/world/entity/Entity;)V
+     304: return
+     305: new           #378                // class com/sshakusora/waystonessable/network/SableTeleportPayload
+     308: dup
+     309: aload         4
+     311: invokestatic  #380                // Method java/util/Optional.ofNullable:(Ljava/lang/Object;)Ljava/util/Optional;
+     314: invokedynamic #386,  0            // InvokeDynamic #2:apply:()Ljava/util/function/Function;
+     319: invokevirtual #390                // Method java/util/Optional.map:(Ljava/util/function/Function;)Ljava/util/Optional;
+     322: aload         7
+     324: invokevirtual #394                // Method net/minecraft/server/level/ServerPlayer.getX:()D
+     327: aload         7
+     329: invokevirtual #395                // Method net/minecraft/server/level/ServerPlayer.getY:()D
+     332: aload         7
+     334: invokevirtual #396                // Method net/minecraft/server/level/ServerPlayer.getZ:()D
+     337: invokespecial #397                // Method com/sshakusora/waystonessable/network/SableTeleportPayload."<init>":(Ljava/util/Optional;DDD)V
+     340: astore        8
+     342: aload         7
+     344: getfield      #326                // Field net/minecraft/server/level/ServerPlayer.connection:Lnet/minecraft/server/network/ServerGamePacketListenerImpl;
+     347: new           #330                // class net/minecraft/network/protocol/common/ClientboundCustomPayloadPacket
+     350: dup
+     351: aload         8
+     353: invokespecial #337                // Method net/minecraft/network/protocol/common/ClientboundCustomPayloadPacket."<init>":(Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload;)V
+     356: invokevirtual #340                // Method net/minecraft/server/network/ServerGamePacketListenerImpl.send:(Lnet/minecraft/network/protocol/Packet;)V
+     359: return
+
+  private static long getPlotCoordinate(net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos);
+    Code:
+       0: aload_0
+       1: invokestatic  #278                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.getContainer:(Lnet/minecraft/server/level/ServerLevel;)Ldev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer;
+       4: astore_2
+       5: aload_2
+       6: ifnonnull     13
+       9: ldc2_w        #289                // long -9223372036854775808l
+      12: lreturn
+      13: aload_1
+      14: invokevirtual #107                // Method net/minecraft/core/BlockPos.getX:()I
+      17: iconst_4
+      18: ishr
+      19: istore_3
+      20: aload_1
+      21: invokevirtual #118                // Method net/minecraft/core/BlockPos.getZ:()I
+      24: iconst_4
+      25: ishr
+      26: istore        4
+      28: aload_2
+      29: iload_3
+      30: iload         4
+      32: invokevirtual #405                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.inBounds:(II)Z
+      35: ifne          42
+      38: ldc2_w        #289                // long -9223372036854775808l
+      41: lreturn
+      42: iload_3
+      43: aload_2
+      44: invokevirtual #409                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.getLogPlotSize:()I
+      47: ishr
+      48: aload_2
+      49: invokevirtual #412                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.getOrigin:()Lorg/joml/Vector2i;
+      52: getfield      #309                // Field org/joml/Vector2i.x:I
+      55: isub
+      56: istore        5
+      58: iload         4
+      60: aload_2
+      61: invokevirtual #409                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.getLogPlotSize:()I
+      64: ishr
+      65: aload_2
+      66: invokevirtual #412                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.getOrigin:()Lorg/joml/Vector2i;
+      69: getfield      #314                // Field org/joml/Vector2i.y:I
+      72: isub
+      73: istore        6
+      75: iload         5
+      77: iflt          85
+      80: iload         6
+      82: ifge          89
+      85: ldc2_w        #289                // long -9223372036854775808l
+      88: lreturn
+      89: aload_2
+      90: iload         5
+      92: iload         6
+      94: invokevirtual #413                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.getIndex:(II)I
+      97: istore        7
+      99: aload_2
+     100: iload_3
+     101: iload         4
+     103: invokevirtual #281                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.getPlot:(II)Ldev/ryanhcode/sable/sublevel/plot/LevelPlot;
+     106: ifnonnull     133
+     109: aload_2
+     110: invokevirtual #417                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.getOccupancy:()Ljava/util/BitSet;
+     113: iload         7
+     115: invokevirtual #421                // Method java/util/BitSet.get:(I)Z
+     118: ifne          133
+     121: aload_0
+     122: aload_1
+     123: invokestatic  #223                // Method findStoredSubLevelData:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Ldev/ryanhcode/sable/sublevel/storage/serialization/SubLevelData;
+     126: ifnonnull     133
+     129: ldc2_w        #289                // long -9223372036854775808l
+     132: lreturn
+     133: iload         5
+     135: iload         6
+     137: invokestatic  #316                // Method net/minecraft/world/level/ChunkPos.asLong:(II)J
+     140: lreturn
+
+  private static dev.ryanhcode.sable.sublevel.storage.serialization.SubLevelData findStoredSubLevelData(net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos);
+    Code:
+       0: aload_0
+       1: invokestatic  #278                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.getContainer:(Lnet/minecraft/server/level/ServerLevel;)Ldev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer;
+       4: astore_2
+       5: aload_2
+       6: ifnonnull     11
+       9: aconst_null
+      10: areturn
+      11: aload_1
+      12: invokevirtual #107                // Method net/minecraft/core/BlockPos.getX:()I
+      15: iconst_4
+      16: ishr
+      17: istore_3
+      18: aload_1
+      19: invokevirtual #118                // Method net/minecraft/core/BlockPos.getZ:()I
+      22: iconst_4
+      23: ishr
+      24: istore        4
+      26: aload_2
+      27: iload_3
+      28: iload         4
+      30: invokevirtual #405                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.inBounds:(II)Z
+      33: ifne          38
+      36: aconst_null
+      37: areturn
+      38: iload_3
+      39: aload_2
+      40: invokevirtual #409                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.getLogPlotSize:()I
+      43: ishr
+      44: aload_2
+      45: invokevirtual #412                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.getOrigin:()Lorg/joml/Vector2i;
+      48: getfield      #309                // Field org/joml/Vector2i.x:I
+      51: isub
+      52: istore        5
+      54: iload         4
+      56: aload_2
+      57: invokevirtual #409                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.getLogPlotSize:()I
+      60: ishr
+      61: aload_2
+      62: invokevirtual #412                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.getOrigin:()Lorg/joml/Vector2i;
+      65: getfield      #314                // Field org/joml/Vector2i.y:I
+      68: isub
+      69: istore        6
+      71: iload         5
+      73: iflt          81
+      76: iload         6
+      78: ifge          83
+      81: aconst_null
+      82: areturn
+      83: aload_2
+      84: invokevirtual #417                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.getOccupancy:()Ljava/util/BitSet;
+      87: aload_2
+      88: iload         5
+      90: iload         6
+      92: invokevirtual #413                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.getIndex:(II)I
+      95: invokevirtual #421                // Method java/util/BitSet.get:(I)Z
+      98: ifne          103
+     101: aconst_null
+     102: areturn
+     103: aload_2
+     104: iload         5
+     106: iload         6
+     108: invokestatic  #426                // Method findLoadedHoldingSubLevel:(Ldev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer;II)Ldev/ryanhcode/sable/sublevel/storage/serialization/SubLevelData;
+     111: astore        7
+     113: aload         7
+     115: ifnull        121
+     118: aload         7
+     120: areturn
+     121: aload_2
+     122: iload         5
+     124: iload         6
+     126: invokestatic  #430                // Method findStoredSubLevelData:(Ldev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer;II)Ldev/ryanhcode/sable/sublevel/storage/serialization/SubLevelData;
+     129: areturn
+
+  private static dev.ryanhcode.sable.sublevel.storage.serialization.SubLevelData findStoredSubLevelData(dev.ryanhcode.sable.api.sublevel.ServerSubLevelContainer, int, int);
+    Code:
+       0: aload_0
+       1: invokevirtual #432                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.getHoldingChunkMap:()Ldev/ryanhcode/sable/sublevel/storage/holding/SubLevelHoldingChunkMap;
+       4: invokevirtual #436                // Method dev/ryanhcode/sable/sublevel/storage/holding/SubLevelHoldingChunkMap.getStorage:()Ldev/ryanhcode/sable/sublevel/storage/serialization/SubLevelStorage;
+       7: astore_3
+       8: aload_3
+       9: invokevirtual #442                // Method dev/ryanhcode/sable/sublevel/storage/serialization/SubLevelStorage.getFolder:()Ljava/nio/file/Path;
+      12: invokeinterface #448,  1          // InterfaceMethod java/nio/file/Path.toFile:()Ljava/io/File;
+      17: invokedynamic #454,  0            // InvokeDynamic #3:accept:()Ljava/io/FilenameFilter;
+      22: invokevirtual #458                // Method java/io/File.listFiles:(Ljava/io/FilenameFilter;)[Ljava/io/File;
+      25: astore        4
+      27: aload         4
+      29: ifnonnull     34
+      32: aconst_null
+      33: areturn
+      34: aload         4
+      36: astore        5
+      38: aload         5
+      40: arraylength
+      41: istore        6
+      43: iconst_0
+      44: istore        7
+      46: iload         7
+      48: iload         6
+      50: if_icmpge     307
+      53: aload         5
+      55: iload         7
+      57: aaload
+      58: astore        8
+      60: aload         8
+      62: invokevirtual #464                // Method java/io/File.getName:()Ljava/lang/String;
+      65: astore        9
+      67: aload         9
+      69: iconst_0
+      70: aload         9
+      72: invokevirtual #468                // Method java/lang/String.length:()I
+      75: ldc_w         #475                // String .slvlr
+      78: invokevirtual #468                // Method java/lang/String.length:()I
+      81: isub
+      82: invokevirtual #477                // Method java/lang/String.substring:(II)Ljava/lang/String;
+      85: astore        10
+      87: aload         10
+      89: ldc_w         #481                // String \\.
+      92: invokevirtual #483                // Method java/lang/String.split:(Ljava/lang/String;)[Ljava/lang/String;
+      95: astore        11
+      97: aload         11
+      99: arraylength
+     100: iconst_3
+     101: if_icmpeq     107
+     104: goto          301
+     107: aload         11
+     109: iconst_1
+     110: aaload
+     111: invokestatic  #487                // Method java/lang/Integer.parseInt:(Ljava/lang/String;)I
+     114: istore        12
+     116: aload         11
+     118: iconst_2
+     119: aaload
+     120: invokestatic  #487                // Method java/lang/Integer.parseInt:(Ljava/lang/String;)I
+     123: istore        13
+     125: goto          133
+     128: astore        14
+     130: goto          301
+     133: iconst_0
+     134: istore        14
+     136: iload         14
+     138: getstatic     #495                // Field dev/ryanhcode/sable/sublevel/storage/region/SubLevelRegionFile.SIDE_LENGTH:I
+     141: if_icmpge     301
+     144: iconst_0
+     145: istore        15
+     147: iload         15
+     149: getstatic     #495                // Field dev/ryanhcode/sable/sublevel/storage/region/SubLevelRegionFile.SIDE_LENGTH:I
+     152: if_icmpge     295
+     155: new           #301                // class net/minecraft/world/level/ChunkPos
+     158: dup
+     159: iload         12
+     161: getstatic     #495                // Field dev/ryanhcode/sable/sublevel/storage/region/SubLevelRegionFile.SIDE_LENGTH:I
+     164: imul
+     165: iload         14
+     167: iadd
+     168: iload         13
+     170: getstatic     #495                // Field dev/ryanhcode/sable/sublevel/storage/region/SubLevelRegionFile.SIDE_LENGTH:I
+     173: imul
+     174: iload         15
+     176: iadd
+     177: invokespecial #498                // Method net/minecraft/world/level/ChunkPos."<init>":(II)V
+     180: astore        16
+     182: aload_3
+     183: aload         16
+     185: invokevirtual #501                // Method dev/ryanhcode/sable/sublevel/storage/serialization/SubLevelStorage.attemptLoadHoldingChunk:(Lnet/minecraft/world/level/ChunkPos;)Ldev/ryanhcode/sable/sublevel/storage/holding/SubLevelHoldingChunk;
+     188: astore        17
+     190: aload         17
+     192: ifnonnull     198
+     195: goto          289
+     198: aload         17
+     200: invokevirtual #505                // Method dev/ryanhcode/sable/sublevel/storage/holding/SubLevelHoldingChunk.getSubLevelPointers:()Ljava/util/List;
+     203: invokeinterface #511,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     208: astore        18
+     210: aload         18
+     212: invokeinterface #517,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     217: ifeq          289
+     220: aload         18
+     222: invokeinterface #523,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     227: checkcast     #527                // class dev/ryanhcode/sable/sublevel/storage/holding/SavedSubLevelPointer
+     230: astore        19
+     232: aload_3
+     233: aload         16
+     235: aload         19
+     237: invokevirtual #529                // Method dev/ryanhcode/sable/sublevel/storage/serialization/SubLevelStorage.attemptLoadSubLevel:(Lnet/minecraft/world/level/ChunkPos;Ldev/ryanhcode/sable/sublevel/storage/holding/SavedSubLevelPointer;)Ldev/ryanhcode/sable/sublevel/storage/serialization/SubLevelData;
+     240: astore        20
+     242: aload         20
+     244: ifnonnull     250
+     247: goto          210
+     250: aload         20
+     252: invokestatic  #533                // Method readPlotPos:(Ldev/ryanhcode/sable/sublevel/storage/serialization/SubLevelData;)Lnet/minecraft/core/BlockPos;
+     255: astore        21
+     257: aload         21
+     259: ifnonnull     265
+     262: goto          210
+     265: aload         21
+     267: invokevirtual #107                // Method net/minecraft/core/BlockPos.getX:()I
+     270: iload_1
+     271: if_icmpne     210
+     274: aload         21
+     276: invokevirtual #118                // Method net/minecraft/core/BlockPos.getZ:()I
+     279: iload_2
+     280: if_icmpeq     286
+     283: goto          210
+     286: aload         20
+     288: areturn
+     289: iinc          15, 1
+     292: goto          147
+     295: iinc          14, 1
+     298: goto          136
+     301: iinc          7, 1
+     304: goto          46
+     307: aconst_null
+     308: areturn
+    Exception table:
+       from    to  target type
+         107   125   128   Class java/lang/NumberFormatException
+
+  private static dev.ryanhcode.sable.sublevel.storage.serialization.SubLevelData findLoadedHoldingSubLevel(dev.ryanhcode.sable.api.sublevel.ServerSubLevelContainer, int, int);
+    Code:
+       0: aload_0
+       1: invokevirtual #432                // Method dev/ryanhcode/sable/api/sublevel/ServerSubLevelContainer.getHoldingChunkMap:()Ldev/ryanhcode/sable/sublevel/storage/holding/SubLevelHoldingChunkMap;
+       4: checkcast     #537                // class com/sshakusora/waystonessable/mixin/accessor/SubLevelHoldingChunkMapAccessor
+       7: astore_3
+       8: aload_3
+       9: invokeinterface #539,  1          // InterfaceMethod com/sshakusora/waystonessable/mixin/accessor/SubLevelHoldingChunkMapAccessor.waystonesSable$getLoadedHoldingChunks:()Lit/unimi/dsi/fastutil/longs/Long2ObjectMap;
+      14: invokeinterface #543,  1          // InterfaceMethod it/unimi/dsi/fastutil/longs/Long2ObjectMap.values:()Lit/unimi/dsi/fastutil/objects/ObjectCollection;
+      19: invokeinterface #549,  1          // InterfaceMethod it/unimi/dsi/fastutil/objects/ObjectCollection.iterator:()Lit/unimi/dsi/fastutil/objects/ObjectIterator;
+      24: astore        4
+      26: aload         4
+      28: invokeinterface #517,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      33: ifeq          141
+      36: aload         4
+      38: invokeinterface #523,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      43: checkcast     #506                // class dev/ryanhcode/sable/sublevel/storage/holding/SubLevelHoldingChunk
+      46: astore        5
+      48: aload         5
+      50: checkcast     #554                // class com/sshakusora/waystonessable/mixin/accessor/SubLevelHoldingChunkAccessor
+      53: astore        6
+      55: aload         6
+      57: invokeinterface #556,  1          // InterfaceMethod com/sshakusora/waystonessable/mixin/accessor/SubLevelHoldingChunkAccessor.waystonesSable$getLoadedHoldingSubLevels:()Lit/unimi/dsi/fastutil/objects/Object2ObjectMap;
+      62: invokeinterface #560,  1          // InterfaceMethod it/unimi/dsi/fastutil/objects/Object2ObjectMap.values:()Lit/unimi/dsi/fastutil/objects/ObjectCollection;
+      67: invokeinterface #549,  1          // InterfaceMethod it/unimi/dsi/fastutil/objects/ObjectCollection.iterator:()Lit/unimi/dsi/fastutil/objects/ObjectIterator;
+      72: astore        7
+      74: aload         7
+      76: invokeinterface #517,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      81: ifeq          138
+      84: aload         7
+      86: invokeinterface #523,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      91: checkcast     #563                // class dev/ryanhcode/sable/sublevel/storage/HoldingSubLevel
+      94: astore        8
+      96: aload         8
+      98: invokevirtual #565                // Method dev/ryanhcode/sable/sublevel/storage/HoldingSubLevel.data:()Ldev/ryanhcode/sable/sublevel/storage/serialization/SubLevelData;
+     101: invokestatic  #533                // Method readPlotPos:(Ldev/ryanhcode/sable/sublevel/storage/serialization/SubLevelData;)Lnet/minecraft/core/BlockPos;
+     104: astore        9
+     106: aload         9
+     108: ifnull        74
+     111: aload         9
+     113: invokevirtual #107                // Method net/minecraft/core/BlockPos.getX:()I
+     116: iload_1
+     117: if_icmpne     74
+     120: aload         9
+     122: invokevirtual #118                // Method net/minecraft/core/BlockPos.getZ:()I
+     125: iload_2
+     126: if_icmpeq     132
+     129: goto          74
+     132: aload         8
+     134: invokevirtual #565                // Method dev/ryanhcode/sable/sublevel/storage/HoldingSubLevel.data:()Ldev/ryanhcode/sable/sublevel/storage/serialization/SubLevelData;
+     137: areturn
+     138: goto          26
+     141: aconst_null
+     142: areturn
+
+  private static net.minecraft.world.phys.Vec3 transformStoredTargetPos(dev.ryanhcode.sable.sublevel.storage.serialization.SubLevelData, net.minecraft.world.phys.Vec3);
+    Code:
+       0: aload_0
+       1: invokevirtual #569                // Method dev/ryanhcode/sable/sublevel/storage/serialization/SubLevelData.pose:()Ldev/ryanhcode/sable/companion/math/Pose3d;
+       4: new           #357                // class org/joml/Vector3d
+       7: dup
+       8: aload_1
+       9: getfield      #103                // Field net/minecraft/world/phys/Vec3.x:D
+      12: aload_1
+      13: getfield      #110                // Field net/minecraft/world/phys/Vec3.y:D
+      16: aload_1
+      17: getfield      #115                // Field net/minecraft/world/phys/Vec3.z:D
+      20: invokespecial #359                // Method org/joml/Vector3d."<init>":(DDD)V
+      23: invokevirtual #572                // Method dev/ryanhcode/sable/companion/math/Pose3d.transformPosition:(Lorg/joml/Vector3d;)Lorg/joml/Vector3d;
+      26: astore_2
+      27: new           #69                 // class net/minecraft/world/phys/Vec3
+      30: dup
+      31: aload_2
+      32: getfield      #575                // Field org/joml/Vector3d.x:D
+      35: aload_2
+      36: getfield      #576                // Field org/joml/Vector3d.y:D
+      39: aload_2
+      40: getfield      #577                // Field org/joml/Vector3d.z:D
+      43: invokespecial #239                // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+      46: areturn
+
+  private static void resetEntityMotion(net.minecraft.world.entity.Entity);
+    Code:
+       0: aload_0
+       1: getstatic     #578                // Field net/minecraft/world/phys/Vec3.ZERO:Lnet/minecraft/world/phys/Vec3;
+       4: invokevirtual #582                // Method net/minecraft/world/entity/Entity.setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V
+       7: aload_0
+       8: fconst_0
+       9: putfield      #586                // Field net/minecraft/world/entity/Entity.fallDistance:F
+      12: aload_0
+      13: instanceof    #590                // class dev/ryanhcode/sable/mixinterface/entity/entity_sublevel_collision/LivingEntityMovementExtension
+      16: ifeq          34
+      19: aload_0
+      20: checkcast     #590                // class dev/ryanhcode/sable/mixinterface/entity/entity_sublevel_collision/LivingEntityMovementExtension
+      23: astore_1
+      24: aload_1
+      25: invokeinterface #592,  1          // InterfaceMethod dev/ryanhcode/sable/mixinterface/entity/entity_sublevel_collision/LivingEntityMovementExtension.sable$getInheritedVelocity:()Lorg/joml/Vector3d;
+      30: invokevirtual #596                // Method org/joml/Vector3d.zero:()Lorg/joml/Vector3d;
+      33: pop
+      34: return
+
+  private static net.minecraft.core.BlockPos readPlotPos(dev.ryanhcode.sable.sublevel.storage.serialization.SubLevelData);
+    Code:
+       0: aload_0
+       1: invokevirtual #599                // Method dev/ryanhcode/sable/sublevel/storage/serialization/SubLevelData.fullTag:()Lnet/minecraft/nbt/CompoundTag;
+       4: ldc_w         #603                // String plot
+       7: invokevirtual #605                // Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;)Z
+      10: ifne          15
+      13: aconst_null
+      14: areturn
+      15: aload_0
+      16: invokevirtual #599                // Method dev/ryanhcode/sable/sublevel/storage/serialization/SubLevelData.fullTag:()Lnet/minecraft/nbt/CompoundTag;
+      19: ldc_w         #603                // String plot
+      22: invokevirtual #611                // Method net/minecraft/nbt/CompoundTag.getCompound:(Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;
+      25: astore_1
+      26: aload_1
+      27: ldc_w         #615                // String plot_x
+      30: invokevirtual #605                // Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;)Z
+      33: ifeq          46
+      36: aload_1
+      37: ldc_w         #617                // String plot_z
+      40: invokevirtual #605                // Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;)Z
+      43: ifne          48
+      46: aconst_null
+      47: areturn
+      48: new           #51                 // class net/minecraft/core/BlockPos
+      51: dup
+      52: aload_1
+      53: ldc_w         #615                // String plot_x
+      56: invokevirtual #619                // Method net/minecraft/nbt/CompoundTag.getInt:(Ljava/lang/String;)I
+      59: iconst_0
+      60: aload_1
+      61: ldc_w         #617                // String plot_z
+      64: invokevirtual #619                // Method net/minecraft/nbt/CompoundTag.getInt:(Ljava/lang/String;)I
+      67: invokespecial #622                // Method net/minecraft/core/BlockPos."<init>":(III)V
+      70: areturn
+
+  private static boolean lambda$findStoredSubLevelData$2(java.io.File, java.lang.String);
+    Code:
+       0: aload_1
+       1: ldc_w         #475                // String .slvlr
+       4: invokevirtual #625                // Method java/lang/String.endsWith:(Ljava/lang/String;)Z
+       7: ireturn
+
+  private static boolean lambda$getEntitiesInsideBlock$1(java.util.function.Predicate, net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.entity.Entity);
+    Code:
+       0: getstatic     #120                // Field net/minecraft/world/entity/EntitySelector.ENTITY_STILL_ALIVE:Ljava/util/function/Predicate;
+       3: aload_3
+       4: invokeinterface #628,  2          // InterfaceMethod java/util/function/Predicate.test:(Ljava/lang/Object;)Z
+       9: ifeq          35
+      12: aload_0
+      13: aload_3
+      14: invokeinterface #628,  2          // InterfaceMethod java/util/function/Predicate.test:(Ljava/lang/Object;)Z
+      19: ifeq          35
+      22: aload_1
+      23: aload_2
+      24: aload_3
+      25: invokestatic  #207                // Method isEntityInsideBlock:(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Entity;)Z
+      28: ifeq          35
+      31: iconst_1
+      32: goto          36
+      35: iconst_0
+      36: ireturn
+
+  private static boolean lambda$getEntitiesInsideBlock$0(java.util.function.Predicate, net.minecraft.world.entity.Entity);
+    Code:
+       0: getstatic     #120                // Field net/minecraft/world/entity/EntitySelector.ENTITY_STILL_ALIVE:Ljava/util/function/Predicate;
+       3: aload_1
+       4: invokeinterface #628,  2          // InterfaceMethod java/util/function/Predicate.test:(Ljava/lang/Object;)Z
+       9: ifeq          26
+      12: aload_0
+      13: aload_1
+      14: invokeinterface #628,  2          // InterfaceMethod java/util/function/Predicate.test:(Ljava/lang/Object;)Z
+      19: ifeq          26
+      22: iconst_1
+      23: goto          27
+      26: iconst_0
+      27: ireturn
+
+  static {};
+    Code:
+       0: new           #632                // class java/util/concurrent/ConcurrentHashMap
+       3: dup
+       4: invokespecial #634                // Method java/util/concurrent/ConcurrentHashMap."<init>":()V
+       7: putstatic     #155                // Field WARP_PLATE_ARRIVAL_GUARDS:Ljava/util/Map;
+      10: new           #632                // class java/util/concurrent/ConcurrentHashMap
+      13: dup
+      14: invokespecial #634                // Method java/util/concurrent/ConcurrentHashMap."<init>":()V
+      17: putstatic     #177                // Field MOVING_WAYSTONES:Ljava/util/Map;
+      20: return
+}
+
+

@@ -1,0 +1,14 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+
+[[mods]]
+modId="ironssableguard"
+version="1.0.0"
+displayName="Irons Sable Guard"
+description='''
+Compatibility guard for Iron's Spells and Sable/Aeronautics.
+'''
+
+[[mixins]]
+config="ironssableguard.mixins.json"

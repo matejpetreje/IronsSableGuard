@@ -1,0 +1,88 @@
+Compiled from "WaystoneTeleportManagerMixin.java"
+public class com.sshakusora.waystonessable.mixin.WaystoneTeleportManagerMixin {
+  private static final java.lang.ThreadLocal<net.minecraft.world.phys.Vec3> waystonesSable$originalTargetPos;
+
+  private static final java.lang.ThreadLocal<java.lang.Boolean> waystonesSable$dimensionalTeleport;
+
+  public com.sshakusora.waystonessable.mixin.WaystoneTeleportManagerMixin();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  private static void waystonesSable$captureTargetPos(net.minecraft.world.entity.Entity, net.minecraft.server.level.ServerLevel, net.minecraft.world.phys.Vec3, net.minecraft.core.Direction, org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<net.minecraft.world.entity.Entity>);
+    Code:
+       0: getstatic     #7                  // Field waystonesSable$originalTargetPos:Ljava/lang/ThreadLocal;
+       3: aload_2
+       4: invokevirtual #13                 // Method java/lang/ThreadLocal.set:(Ljava/lang/Object;)V
+       7: getstatic     #19                 // Field waystonesSable$dimensionalTeleport:Ljava/lang/ThreadLocal;
+      10: aload_1
+      11: invokevirtual #22                 // Method net/minecraft/server/level/ServerLevel.dimensionType:()Lnet/minecraft/world/level/dimension/DimensionType;
+      14: aload_0
+      15: invokevirtual #28                 // Method net/minecraft/world/entity/Entity.level:()Lnet/minecraft/world/level/Level;
+      18: invokevirtual #34                 // Method net/minecraft/world/level/Level.dimensionType:()Lnet/minecraft/world/level/dimension/DimensionType;
+      21: if_acmpeq     28
+      24: iconst_1
+      25: goto          29
+      28: iconst_0
+      29: invokestatic  #37                 // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+      32: invokevirtual #13                 // Method java/lang/ThreadLocal.set:(Ljava/lang/Object;)V
+      35: aload_1
+      36: invokevirtual #22                 // Method net/minecraft/server/level/ServerLevel.dimensionType:()Lnet/minecraft/world/level/dimension/DimensionType;
+      39: aload_0
+      40: invokevirtual #28                 // Method net/minecraft/world/entity/Entity.level:()Lnet/minecraft/world/level/Level;
+      43: invokevirtual #34                 // Method net/minecraft/world/level/Level.dimensionType:()Lnet/minecraft/world/level/dimension/DimensionType;
+      46: if_acmpeq     55
+      49: aload_0
+      50: aload_1
+      51: aload_2
+      52: invokestatic  #43                 // Method com/sshakusora/waystonessable/compat/SableWaystoneCompat.prepareCrossDimensionTeleport:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;)V
+      55: return
+
+  private static net.minecraft.world.phys.Vec3 waystonesSable$adjustTargetPos(net.minecraft.world.phys.Vec3, net.minecraft.world.entity.Entity, net.minecraft.server.level.ServerLevel);
+    Code:
+       0: aload_2
+       1: aload_0
+       2: invokestatic  #49                 // Method com/sshakusora/waystonessable/compat/SableWaystoneCompat.getVisibleTeleportPos:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;
+       5: areturn
+
+  private static void waystonesSable$syncTracking(net.minecraft.world.entity.Entity, net.minecraft.server.level.ServerLevel, net.minecraft.world.phys.Vec3, net.minecraft.core.Direction, org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<net.minecraft.world.entity.Entity>);
+    Code:
+       0: getstatic     #7                  // Field waystonesSable$originalTargetPos:Ljava/lang/ThreadLocal;
+       3: invokevirtual #53                 // Method java/lang/ThreadLocal.get:()Ljava/lang/Object;
+       6: checkcast     #57                 // class net/minecraft/world/phys/Vec3
+       9: astore        5
+      11: getstatic     #59                 // Field java/lang/Boolean.TRUE:Ljava/lang/Boolean;
+      14: getstatic     #19                 // Field waystonesSable$dimensionalTeleport:Ljava/lang/ThreadLocal;
+      17: invokevirtual #53                 // Method java/lang/ThreadLocal.get:()Ljava/lang/Object;
+      20: invokevirtual #63                 // Method java/lang/Boolean.equals:(Ljava/lang/Object;)Z
+      23: istore        6
+      25: getstatic     #7                  // Field waystonesSable$originalTargetPos:Ljava/lang/ThreadLocal;
+      28: invokevirtual #67                 // Method java/lang/ThreadLocal.remove:()V
+      31: getstatic     #19                 // Field waystonesSable$dimensionalTeleport:Ljava/lang/ThreadLocal;
+      34: invokevirtual #67                 // Method java/lang/ThreadLocal.remove:()V
+      37: aload         5
+      39: ifnull        65
+      42: aload         4
+      44: invokevirtual #70                 // Method org/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable.getReturnValue:()Ljava/lang/Object;
+      47: ifnull        65
+      50: aload         4
+      52: invokevirtual #70                 // Method org/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable.getReturnValue:()Ljava/lang/Object;
+      55: checkcast     #29                 // class net/minecraft/world/entity/Entity
+      58: aload         5
+      60: iload         6
+      62: invokestatic  #75                 // Method com/sshakusora/waystonessable/compat/SableWaystoneCompat.syncTrackingAfterTeleport:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;Z)V
+      65: return
+
+  static {};
+    Code:
+       0: new           #14                 // class java/lang/ThreadLocal
+       3: dup
+       4: invokespecial #79                 // Method java/lang/ThreadLocal."<init>":()V
+       7: putstatic     #7                  // Field waystonesSable$originalTargetPos:Ljava/lang/ThreadLocal;
+      10: new           #14                 // class java/lang/ThreadLocal
+      13: dup
+      14: invokespecial #79                 // Method java/lang/ThreadLocal."<init>":()V
+      17: putstatic     #19                 // Field waystonesSable$dimensionalTeleport:Ljava/lang/ThreadLocal;
+      20: return
+}
